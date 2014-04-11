@@ -5,6 +5,9 @@
 	<title>Welcome</title>
 </head>
 <body>
+
+	<img src="<?=assets_url()?>yeaahh.jpg" />
+
 	<?php
 		if (!empty($data)) {
 			foreach ($data as $key => $data) {?>

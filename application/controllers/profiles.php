@@ -1,12 +1,17 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
-
-	public function index()
-	{
-		$dbg = array_merge($this->usermodel->getUserByID(2), $this->usermodel->getProfileByID(2));
+class Profiles extends CI_Controller {
 	
-		$data = array('profiles' => $profiles, 'dbg' => $dbg);
-		$this->load->view('welcome_message', $data);
+	public function details($id)
+	{
+	
+		if(!$this->session->userdata('userid')) {
+			redirect("/login");
+		}
+		
+		echo 'details of '.$id;	
+		$dbg = array_merge($this->usermodel->getUserByID(2), $this->usermodel->getProfileByID(2));
+
+		
 	}
 }

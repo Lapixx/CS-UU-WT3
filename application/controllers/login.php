@@ -13,7 +13,8 @@ class Login extends CI_Controller {
             $password = $this->input->post('password');
 
             if ($this->usermodel->tryLogin($email, $password)) {
-                $this->load->view('loginsuccess');
+                //$this->load->view('loginsuccess');
+                redirect("/welcome");
                 return;
             }
 

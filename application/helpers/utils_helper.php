@@ -16,3 +16,10 @@ function css_url() {
 function js_url() {
 	return assets_url() . 'js/';
 }
+
+function dob_to_age($dob) {
+	$time = strtotime($dob);
+	$diff = time() - $time;
+	$age = $diff / 60 / 60 / 24 / 365;
+	return floor($age);
+}

@@ -20,21 +20,22 @@
 
 	<?php } ?>
 	
-	
 	<br/><br/><hr/><br/><br/>
 	
 	<?php
 		if (!empty($profiles)) {
 			foreach ($profiles as $profile) {
-				echo '---<br/>';
+				echo '<div>';
 				echo '<a href="'.base_url().'profiles/details/'.$profile['userid'].'">';
-				echo $profile['nickname'].'</a><br/>';
-				echo $profile['gender'][0].'<br/>';
-				echo $profile['dob'].'<br/>';
+				echo '<img src="<?=img_url()?>yeaahh.jpg" />';
+				echo '</a><br/>';
+				echo '<a href="'.base_url().'profiles/details/'.$profile['userid'].'">';
+				echo '<b>'.$profile['nickname'].'</b>';
+				echo '</a> ('.dob_to_age($profile['dob']).', '.strtoupper($profile['gender'][0]).')<br/>';
+				echo 'Personality: '.$profile['personality'].'<br/>';
+				echo 'Brands: '.implode(', ', array_slice(explode(',', $profile['brands']), 0, 3)).'<br/>';
 				echo $profile['description'].'<br/>';
-				echo $profile['personality'].'<br/>';
-				echo implode(', ', array_slice(explode(',', $profile['brands']), 0, 3)).'<br/>';
-				echo '---';
+				echo '</div>';
 			}
 		}		
 	?>

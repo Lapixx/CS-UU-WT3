@@ -4,6 +4,10 @@ class Login extends CI_Controller {
 
 	public function index()
 	{
+		if($this->session->userdata('userid')) {
+			redirect("/welcome");
+		}
+		
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
         $this->form_validation->set_rules('password', 'Password', 'required');
 

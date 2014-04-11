@@ -19,6 +19,24 @@ class Usermodel extends CI_Model
         $query = $this->db->get_where('profiles', array('userid' => $id));
         return $query->row_array();
     }
+    
+    public function getRandomProfiles($n)
+    {
+        $query = $this->db->get('profiles');
+        $results = $query->result_array();
+        
+        $n = min($n, count($results));
+        $random_keys = array_rand($results, $n);
+        
+		if ($n === 1) return array($results[$random_keys]);
+		
+        $random_results = array();
+        foreach ($random_keys as $i) {
+        	array_push($random_results, $results[$i]);
+        }
+        
+        return $random_results;
+    }
 
     public function getProfileByEmail($email)
     {

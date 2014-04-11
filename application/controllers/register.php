@@ -22,7 +22,7 @@ class Register extends CI_Controller {
         $this->form_validation->set_message('is_unique', 'Already in use.');
         $this->form_validation->set_message('required', 'This field is required.');
 
-        $data = array('brands' => array('Skyrim', 'Kerbal Space Program', 'The Banner Saga', 'Final Fantasy VII'), 'questions' => $this->questions);
+        $data = array('brands' => $this->brandmodel->getBrandNames(), 'questions' => $this->questions);
         if ($this->form_validation->run()) {
             $email = $this->input->post('email');
             $password = $this->input->post('password');

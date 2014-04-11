@@ -10,7 +10,16 @@
 	
 	<img src="<?=img_url()?>yeaahh.jpg" /><br/>
 	
-	<a href="<?=base_url()?>login">Sign in</a> or <a href="<?=base_url()?>register">Register</a>
+	<?php if($this->session->userdata('userid')) { ?>
+	
+		Logged in, whoop! <a href="<?=base_url()?>logout">Sign out</a>
+	
+	<?php } else { ?>
+	
+		<a href="<?=base_url()?>login">Sign in</a> or <a href="<?=base_url()?>register">Register</a>
+
+	<?php } ?>
+	
 	
 	<br/><br/><hr/><br/><br/>
 	
@@ -18,7 +27,8 @@
 		if (!empty($profiles)) {
 			foreach ($profiles as $profile) {
 				echo '---<br/>';
-				echo $profile['nickname'].'<br/>';
+				echo '<a href="'.base_url().'profiles/details/'.$profile['userid'].'">';
+				echo $profile['nickname'].'</a><br/>';
 				echo $profile['gender'][0].'<br/>';
 				echo $profile['dob'].'<br/>';
 				echo $profile['description'].'<br/>';
@@ -29,7 +39,7 @@
 		}		
 	?>
 	
-	<a href="<?=base_url()?>">MEEEEER!!!!</a>
+	<a href="<?=base_url()?>">MEEEEER!!!!</a><br/>
 
 	<?php /*
 		if (!empty($dbg)) {

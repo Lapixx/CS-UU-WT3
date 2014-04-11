@@ -103,8 +103,33 @@ class Usermodel extends CI_Model
         return $this->db->affected_rows() > 0;
     }
 
+    public function like($user)
+    {
+        $userid = $this->session->userdata('userid');
+        $this->db->select('likes');
+        $likes = $this->db->get_where('profiles', array('userid' => $userid))->row_array();
+        if (empty($likes['likes'])) {
+            $likes['likes'] = "$user";
+        }
+        else {
+            $likes['likes'] .= ",$user";
+        }
+        $this->db->where('userid', $userid);
+        $this->db->update('profiles', $likes);
+    }
+
+    public function doesLike($user)
+    {
+        $userid = $this->session->userdata('userid');
+        $this->db->select('likes');
+        $likes = $this->db->get_where('profiles', array('userid' => $userid))->row_array();
+        $exp = explode(',', $likes['likes']);
+        return in_array($user, $exp);
+    }
+
     // source: http://www.techrepublic.com/blog/australian-technology/securing-passwords-with-blowfish/
-    private function generateSalt() {
+    private function generateSalt()
+    {
         $salt = "$2y$10$";
 
         for ($i = 0; $i < 22; $i++) {

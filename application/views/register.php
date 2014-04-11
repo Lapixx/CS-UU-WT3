@@ -73,28 +73,29 @@
 	}
 ?>
 <?php echo form_fieldset_close(); ?>
-<?php echo form_error('brands[]'); ?><br />
+<?php echo form_error('brands'); ?><br />
 
 <?php echo form_fieldset('Please answer the following questions'); ?>
-<?php
+<?php // herping a derp because CI fails with 
 	foreach ($questions as $i => $q) {
 		$quest = $this->input->post('questions');
-		$check;
-		if (!empty($quest)) {
-			$check = $quest[$q[0]];
+		$check = false;
+		if (!empty($quest) && array_key_exists($i, $quest)) {
+			$check = $quest[$i];
 		}
 
 		echo 'Question ' . ($i + 1) . '<br />';
-		echo form_radio(array('name' => "questions[$q[0]]", 'id' => "question{$i}a", 'value' => 'a', 'checked' => isset($check) && $check === 'a' ? 'checked' : ''));
-		echo form_label($q[1], "question{$i}a") . '<br />';
-		echo form_radio(array('name' => "questions[$q[0]]", 'id' => "question{$i}b", 'value' => 'b', 'checked' => isset($check) && $check === 'b' ? 'checked' : ''));
-		echo form_label($q[2], "question{$i}b") . '<br />';
-		echo form_radio(array('name' => "questions[$q[0]]", 'id' => "question{$i}c", 'value' => 'c', 'checked' => !isset($check) || $check === 'c' ? 'checked' : ''));
-		echo form_label($q[3], "question{$i}c") . '<br />';
+		echo form_radio(array('name' => "questions[$i]", 'id' => "question{$i}a", 'value' => 'a', 'checked' => isset($check) && $check === 'a' ? 'checked' : ''));
+		echo form_label($q[0], "question{$i}a") . '<br />';
+		echo form_radio(array('name' => "questions[$i]", 'id' => "question{$i}b", 'value' => 'b', 'checked' => isset($check) && $check === 'b' ? 'checked' : ''));
+		echo form_label($q[1], "question{$i}b") . '<br />';
+		echo form_radio(array('name' => "questions[$i]", 'id' => "question{$i}c", 'value' => 'c', 'checked' => isset($check) && $check === 'c' ? 'checked' : ''));
+		echo form_label($q[2], "question{$i}c") . '<br />';
 		echo '<br />';
 	}
 ?>
 <?php echo form_fieldset_close(); ?>
+<?php echo form_error('questions'); ?><br />
 
 <?php echo form_submit('register', 'Register'); ?>
 

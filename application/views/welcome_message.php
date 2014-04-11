@@ -6,7 +6,13 @@
 </head>
 <body>
 
-	<img src="<?=assets_url()?>yeaahh.jpg" />
+	<h1>yeaahh</h1>
+	
+	<img src="<?=img_url()?>yeaahh.jpg" /><br/>
+	
+	<a href="<?=base_url()?>login">Sign in</a> or <a href="<?=base_url()?>register">Register</a><br/><br/>
+	
+	<hr/>
 
 	<?php
 		if (!empty($data)) {

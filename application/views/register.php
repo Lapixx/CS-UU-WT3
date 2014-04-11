@@ -78,12 +78,18 @@
 <?php echo form_fieldset('Please answer the following questions'); ?>
 <?php
 	foreach ($questions as $i => $q) {
+		$quest = $this->input->post('questions');
+		$check;
+		if (!empty($quest)) {
+			$check = $quest[$q[0]];
+		}
+
 		echo 'Question ' . ($i + 1) . '<br />';
-		echo form_radio(array('name' => "question[$q[0]]", 'id' => "question{$i}a", 'value' => 'a', 'checked' => (set_radio("question[$q[0]]", 'a', true))));
+		echo form_radio(array('name' => "questions[$q[0]]", 'id' => "question{$i}a", 'value' => 'a', 'checked' => isset($check) && $check === 'a' ? 'checked' : ''));
 		echo form_label($q[1], "question{$i}a") . '<br />';
-		echo form_radio(array('name' => "question[$q[0]]", 'id' => "question{$i}b", 'value' => 'b', 'checked' => (set_radio("question[$q[0]]", 'b'))));
+		echo form_radio(array('name' => "questions[$q[0]]", 'id' => "question{$i}b", 'value' => 'b', 'checked' => isset($check) && $check === 'b' ? 'checked' : ''));
 		echo form_label($q[2], "question{$i}b") . '<br />';
-		echo form_radio(array('name' => "question[$q[0]]", 'id' => "question{$i}c", 'value' => 'c', 'checked' => (set_radio("question[$q[0]]", 'c'))));
+		echo form_radio(array('name' => "questions[$q[0]]", 'id' => "question{$i}c", 'value' => 'c', 'checked' => !isset($check) || $check === 'c' ? 'checked' : ''));
 		echo form_label($q[3], "question{$i}c") . '<br />';
 		echo '<br />';
 	}

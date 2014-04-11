@@ -1,4 +1,4 @@
-#RewriteEngine on
-#RewriteCond $1 !^(index\.php|img|js|css|robots\.txt)
-#RewriteRule ^(.*)$ /index.php$1 [L]
+RewriteEngine on
+RewriteCond $1 !^(index\.php|img|js|css|assets|robots\.txt)
+RewriteRule ^(.*)$ /~3855473/WT3/index.php/$1 [L]
 php_flag display_errors on

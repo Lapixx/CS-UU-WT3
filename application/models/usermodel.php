@@ -2,6 +2,31 @@
 
 class Usermodel extends CI_Model 
 {
+
+	private function resolveBrands($profiles) {
+	
+		// single profile
+		if(array_key_exists('userid', $profiles)) {
+			if(!empty($profiles)) {
+				$profiles['brands'] = $this->brandmodel->getBrandNames(explode(',', $profiles['brands']));
+			}
+			return $profiles;
+		}
+	
+		// list of profiles
+		foreach ($profiles as &$profile) {
+		    if(!empty($profile)) {
+		    	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
+		    }
+		}
+		return $profiles;
+	}
+	
+	private function ignoreMe($profiles) {
+		// @TODO remove your own profile from $profiles
+		return $profiles;
+	}
+	
     public function getUserByID($id)
     {
         $query = $this->db->get_where('users', array('userid' => $id));
@@ -20,11 +45,7 @@ class Usermodel extends CI_Model
         $profile = $query->row_array();
         
 		// replace brand IDs with brand names
-		if(!empty($profile)) {
-        	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
-        }
-        
-        return $profile;
+        return $this->resolveBrands($profile);
     }
     
     public function getRandomProfiles($n)
@@ -42,7 +63,7 @@ class Usermodel extends CI_Model
         	$profile = $results[$i];
         	
         	// replace brand IDs with brand names
-        	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
+        	$profile = $this->resolveBrands($profile);
         	shuffle($profile['brands']);
         	
         	array_push($random_results, $profile);
@@ -186,12 +207,8 @@ class Usermodel extends CI_Model
         $this->db->where_in('userid', $exp);
         $profiles = $this->db->get('profiles')->result_array();
         
-        foreach ($profiles as &$profile) {
-	        if(!empty($profile)) {
-	        	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
-	        }
-        }
-        
+        $profiles = $this->resolveBrands($profiles);
+                
         return $profiles;        
     }
 
@@ -208,11 +225,7 @@ class Usermodel extends CI_Model
         
         $profiles = array_filter($profiles, 'filterLikedProfiles');
         
-        foreach ($profiles as &$profile) {
-            if(!empty($profile)) {
-            	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
-            }
-        }
+        $profiles = $this->resolveBrands($profiles);
         
         return $profiles;   
     }
@@ -293,11 +306,7 @@ class Usermodel extends CI_Model
         	return $match['profile'];
         }, $matches);
         
-        foreach ($profiles as &$profile) {
-            if(!empty($profile)) {
-            	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
-            }
-        }
+        $profiles = $this->resolveBrands($profiles);
         
         return $profiles;
     }

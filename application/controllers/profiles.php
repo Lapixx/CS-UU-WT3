@@ -12,6 +12,42 @@ class Profiles extends CI_Controller {
 		build_view($this, 'profile_details', array('profile' => $profile, 'title' => $profile['nickname'], 'like' => $like, 'liked' => $liked));
 	}
 	
+	public function my_likes()
+	{
+		// not logged in
+		if(!$this->session->userdata('userid')) {	
+			redirect("/login");
+			exit;
+		}
+		
+		$profiles = $this->usermodel->getLikeProfiles();
+		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People I like'));
+	}
+	
+	public function like_me()
+	{
+		// not logged in
+		if(!$this->session->userdata('userid')) {	
+			redirect("/login");
+			exit;
+		}
+	
+		$profiles = $this->usermodel->getLikedProfiles();
+		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People who like me'));
+	}
+	
+	public function connections()
+	{
+		// not logged in
+		if(!$this->session->userdata('userid')) {	
+			redirect("/login");
+			exit;
+		}
+		
+		$profiles = array_intersect($this->my_likes(), $this->like_me());
+		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'Connections'));
+	}
+	
 	public function like($id)
 	{
 		// not logged in
@@ -24,8 +60,8 @@ class Profiles extends CI_Controller {
 		$query = $this->db->get_where('profiles', array('userid' => $this->session->userdata('userid')));
 		$profile = $query->row_array();
 		
-		// not yet liked
-		if(!in_array($id, $profile['likes'])) {
+		// not liking yourself and not yet liked
+		if($id !== $this->session->userdata('userid') && !in_array($id, $profile['likes'])) {
 			$this->usermodel->like($id);
 		}
 		

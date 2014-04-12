@@ -25,9 +25,9 @@
 				<li>&bull;</li>
 				<li><a href="<?=base_url()?>profiles/connections">Connections</a></li>
 									
-				<li class="right"><a href="<?=base_url()?>logout">Sign out (<?=$currentProfile['firstname']?>)</a></li>
+				<li class="right"><a href="<?=base_url()?>logout">Sign out</a></li>
 				<li class="right">&bull;</li>
-				<li class="right"><a href="<?=base_url()?>home">My Profile</a></li>
+				<li class="right"><a href="<?=base_url()?>profiles/me">My Profile (<?=$currentProfile['firstname']?>)</a></li>
 			
 			<?php } else { ?>
 			

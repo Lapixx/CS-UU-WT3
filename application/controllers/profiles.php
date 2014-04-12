@@ -11,6 +11,22 @@ class Profiles extends CI_Controller {
 		build_view($this, 'profile_details', array('profile' => $profile, 'title' => $profile['nickname']));
 	}
 	
+	public function me()
+	{	
+		// not logged in
+		if(!$this->session->userdata('userid')) {	
+			redirect("/login");
+			exit;
+		}
+	
+		$id = $this->session->userdata('userid');
+		$profile = $this->usermodel->getProfileByID($id);
+		$user = $this->usermodel->getUserByID($id);
+		$profile['email'] = $user['email'];
+		
+		build_view($this, 'profile_details', array('profile' => $profile, 'title' => $profile['nickname']));
+	}
+	
 	public function my_likes()
 	{
 		// not logged in

@@ -23,7 +23,18 @@ class Usermodel extends CI_Model
 	}
 	
 	private function ignoreMe($profiles) {
-		// @TODO remove your own profile from $profiles
+		if(!$this->session->userdata('userid')) return $profiles;
+		
+		global $myid;
+		$myid = $this->session->userdata('userid');
+		
+	
+		function filterIgnoreMe($profile){
+			global $myid;
+			return $profile['userid'] !== $myid;
+		}
+	
+		$profiles = array_filter($profiles, 'filterIgnoreMe');
 		return $profiles;
 	}
 	

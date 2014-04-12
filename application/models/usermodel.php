@@ -155,18 +155,34 @@ class Usermodel extends CI_Model
     {
         $userid = $this->session->userdata('userid');
         $this->db->select('likes');
-        $likes = $this->db->get_where('profiles', array('userid' => $user['userid']))->row_array();
+        $likes = $this->db->get_where('profiles', array('userid' => $userid))->row_array();
         $exp = explode(',', $likes['likes']);
 
         $this->db->where_in('userid', $exp);
-        return $this->db->get('profiles')->result_array();
+        $profiles = $this->db->get('profiles')->result_array();
+        
+        foreach ($profiles as &$profile) {
+	        if(!empty($profile)) {
+	        	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
+	        }
+        }
+        
+        return $profiles;        
     }
 
     public function getLikedProfiles()
     {
         $userid = $this->session->userdata('userid');
         $profiles = $this->db->get('profiles')->result_array();
-        return array_filter($profiles, function($profile) { return in_array($userid, explode(',', $profile['likes'])); });
+        $profiles = array_filter($profiles, function($profile) { global $userid; return in_array($userid, explode(',', $profile['likes'])); });
+        
+        foreach ($profiles as &$profile) {
+            if(!empty($profile)) {
+            	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
+            }
+        }
+        
+        return $profiles;   
     }
 
     public function getSortedMatchesForUser($userid = -1)

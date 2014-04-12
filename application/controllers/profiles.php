@@ -8,8 +8,31 @@ class Profiles extends CI_Controller {
 		build_view($this, 'profile_details', array('profile' => $profile, 'title' => $profile['nickname']));
 	}
 	
-	public function avatar($id){
-
+	public function like($id)
+	{
+		// not logged in
+		if(!$this->session->userdata('userid')) {	
+			redirect("/login");
+			exit;
+		}
+	
+		// get current profile
+		$query = $this->db->get_where('profiles', array('userid' => $this->session->userdata('userid')));
+		$profile = $query->row_array();
+		
+		// not yet liked
+		if(!in_array($id, $profile['likes'])) {
+			
+			// @TODO add $id to ['likes']
+			// @TODO recalculate preferences
+		}
+		
+		// back to profile
+		redirect("/profiles/details/" . $id);
+	}
+	
+	public function avatar($id)
+	{
 		$profile = $this->usermodel->getProfileByID($id);
 
 		// profile not found - return 404

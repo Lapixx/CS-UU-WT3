@@ -18,8 +18,8 @@ if (!empty($profiles)) {
 	
 	<br/>
 	
-	Personality: <?=$profile['personality']?><br/>
-	Brands: <?=implode(', ', array_slice($profile['brands'], 0, 3))?><br/>
+	<b>Personality:</b> <?=$profile['personality']?><br/>
+	<b>Brands:</b> <?=implode(', ', array_slice($profile['brands'], 0, 5))?><br/>
 	
 	<br/>
 	
@@ -32,7 +32,7 @@ if (!empty($profiles)) {
 }		
 ?>
 
-<a href="<?=base_url()?>">MEEEEER!!!!</a><br/>
+<a href="<?=base_url()?>" class="right">Show more &rsaquo;</a><br/>
 
 <?php /*
 	if (!empty($dbg)) {

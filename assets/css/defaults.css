@@ -45,7 +45,7 @@ body{
 	line-height: 1.4;
 }
 
-h1, h2, h3, b, nav {
+h1, h2, h3, b, nav, a.prominent {
 	font-family: 'Source Sans Pro', sans-serif;
 }
 
@@ -70,6 +70,23 @@ a{
 
 a:hover{
 	text-decoration: none;
+}
+
+a.right{
+	float: right;
+}
+
+a.prominent{
+	font-size: 20px;
+	background-color: #5500AA;
+	color: #EEDDFF;
+	padding: 2px 10px;
+	margin-right: 10px;
+	border-radius: 4px;
+	text-decoration: none;
+}
+a.prominent:hover{
+	color: #FFFFFF;
 }
 
 footer{
@@ -142,11 +159,20 @@ div.profileCard {
 	width: 250px;
 	vertical-align: top;
 }
+
+div.profileCard img {
+	border-radius: 4px;
+}
+
 div.center{
 	margin-left: auto;
 	margin-right: auto;
 	text-align: center;
 }
-div.profileCard img {
-	border-radius: 4px;
-}
+
+
+
+
+
+
+

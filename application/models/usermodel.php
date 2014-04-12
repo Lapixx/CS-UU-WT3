@@ -20,7 +20,9 @@ class Usermodel extends CI_Model
         $profile = $query->row_array();
         
 		// replace brand IDs with brand names
-        $profile['brands'] = $this->brandmodel->getBrandNames($profile['brands']);
+		if(!empty($profile)) {
+        	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
+        }
         
         return $profile;
     }
@@ -40,7 +42,8 @@ class Usermodel extends CI_Model
         	$profile = $results[$i];
         	
         	// replace brand IDs with brand names
-        	$profile['brands'] = $this->brandmodel->getBrandNames($profile['brands']);
+        	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
+        	shuffle($profile['brands']);
         	
         	array_push($random_results, $profile);
         }

@@ -17,27 +17,15 @@ class Profiles extends CI_Controller {
 			show_404('avatar/'.$id);
 		}
 		
-//		
-//		if($this->session->userdata('userid')) {
-//			
-//				echo 'Logged in, whoop!			';
-//		} else { 			
-//				echo 'Not signed in';
-//				 } 
-//				 exit;
-		
-		
-//		$profile_avatar = 'application/avatars/'.$profile['userid'].'.jpg';
-//		echo $this->session->userdata('userid');
-//		exit;
-//		
+		$profile_avatar = 'application/avatars/'.$profile['userid'].'.jpg';
+
 		// not logged in/no avatar set - return default avatar (m/f)
 		if(!$this->session->userdata('userid') || !file_exists($profile_avatar)) {
 			header('Content-Type: image/jpeg');
 			readfile('assets/img/default_'.$profile['gender'][0].'.jpg');
 			exit;
 		}
-		echo 'set';exit;
+
 		// logged in and avatar set - return avatar
 		header('Content-Type: image/jpeg');
 		readfile($profile_avatar);

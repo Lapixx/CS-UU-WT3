@@ -139,6 +139,8 @@ div.profileCard {
 	margin: 10px;
 	border-radius: 10px;
 	text-align: left;
+	width: 250px;
+	vertical-align: top;
 }
 div.center{
 	margin-left: auto;

@@ -162,6 +162,8 @@ div.profileCard {
 
 div.profileCard img {
 	border-radius: 4px;
+	width: 128px;
+	height: 128px;
 }
 
 div.center{

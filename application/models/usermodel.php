@@ -18,9 +18,11 @@ class Usermodel extends CI_Model
     {
         $query = $this->db->get_where('profiles', array('userid' => $id));
         $profile = $query->row_array();
-        
+
 		// replace brand IDs with brand names
-        $profile['brands'] = $this->brandmodel->getBrandNames($profile['brands']);
+        if (!empty($profile)) {
+            $profile['brands'] = $this->brandmodel->getBrandNames($profile['brands']);
+        }
         
         return $profile;
     }
@@ -110,7 +112,7 @@ class Usermodel extends CI_Model
             $this->db->where('userid', $user['userid']);
             $this->db->update('profiles', $profile);
         }
-        
+
         return $this->db->affected_rows() > 0;
     }
 

@@ -8,7 +8,7 @@ class Search extends ProfileForm {
 	{
         ProfileForm::index();
 
-        $data = array('brands' => $this->brandmodel->getBrandNames());
+        $data = array('brands' => $this->brandmodel->getAllBrandNames());
         if ($this->form_validation->run()) {
             $email = $this->input->post('email');
             $password = $this->input->post('password');

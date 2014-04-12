@@ -17,5 +17,11 @@ if(!$this->session->userdata('userid')) {
 	echo '<a href="'.base_url().'login" class="prominent">Get in touch with '.$profile['nickname'].' &rsaquo;</a>';
 }
 else{
-	echo '<a href="'.base_url().'profiles/like/'.$profile['userid'].'" class="prominent">&#10084; Like</a>';
+
+	if (!$like)
+		echo '<a href="'.base_url().'profiles/like/'.$profile['userid'].'" class="prominent">&#10084; Like</a><br/';
+	echo 'You like this user!<br/>';
+	
+	if ($liked)
+		echo 'This user likes you!';
 }

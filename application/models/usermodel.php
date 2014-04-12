@@ -131,6 +131,27 @@ class Usermodel extends CI_Model
         }
         $this->db->where('userid', $userid);
         $this->db->update('profiles', $likes);
+
+        $personality = $this->db->get_where('profiles', array('userid' => $user))->row_array();
+        $this->learnPreference($userid, $personality['personality']);
+    }
+
+    private function learnPreference($userid, $personality)
+    {
+        $alpha = $this->db->get_where('settings', array('name' => 'alpha'))->row_array();
+        $alpha = $alpha['value'];
+
+        $preference = $this->db->get_where('profiles', array('userid' => $userid))->row_array();
+        $preference = explode(',', $preference['personality_preference']);
+        $personality = explode(',', $personality);
+
+        for ($i = 0; $i < 4; $i++) {
+            $preference[$i] = $alpha * $preference[$i] + (1 - $alpha) * $personality[$i];
+        }
+
+        $preference = implode(',', $preference);
+        $this->db->where('userid', $userid);
+        $this->db->update('profiles', array('personality_preference' => $preference));
     }
 
     public function doesLike($user)

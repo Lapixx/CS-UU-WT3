@@ -17,6 +17,8 @@
 			
 			<?php if($this->session->userdata('userid')) { ?>
 			
+				<li><a href="<?=base_url()?>profiles/discover">Discover</a></li>
+				<li>&bull;</li>
 				<li><a href="<?=base_url()?>profiles/my_likes">My Likes</a></li>
 				<li>&bull;</li>
 				<li><a href="<?=base_url()?>profiles/like_me">Your Likers</a></li>

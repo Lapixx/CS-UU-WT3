@@ -48,6 +48,18 @@ class Profiles extends CI_Controller {
 		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'Connections'));
 	}
 	
+	public function discover()
+	{
+		// not logged in
+		if(!$this->session->userdata('userid')) {	
+			redirect("/login");
+			exit;
+		}
+		
+		$profiles = $this->usermodel->getSortedMatchesForUser();		
+		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People you might like'));
+	}
+	
 	public function like($id)
 	{
 		// not logged in

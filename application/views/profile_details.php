@@ -18,7 +18,7 @@ if(!$this->session->userdata('userid')) {
 }
 else{
 
-	if (!$like)
+	if (!$like && $profile['userid'] !== $this->session->userdata('userid'))
 		echo '<a href="'.base_url().'profiles/like/'.$profile['userid'].'" class="prominent">&#10084; Like</a><br/';
 	echo 'You like this user!<br/>';
 	

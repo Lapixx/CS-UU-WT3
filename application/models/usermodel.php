@@ -157,6 +157,8 @@ class Usermodel extends CI_Model
     public function doesLike($user)
     {
         $userid = $this->session->userdata('userid');
+        if(!$userid) return false;
+        
         $this->db->select('likes');
         $likes = $this->db->get_where('profiles', array('userid' => $userid))->row_array();
         $exp = explode(',', $likes['likes']);
@@ -166,6 +168,8 @@ class Usermodel extends CI_Model
     public function doesLiked($user)
     {
         $userid = $this->session->userdata('userid');
+        if(!$userid) return false;
+        
         $this->db->select('likes');
         $likes = $this->db->get_where('profiles', array('userid' => $user['userid']))->row_array();
         $exp = explode(',', $likes['likes']);
@@ -273,7 +277,7 @@ class Usermodel extends CI_Model
 
             // mutual match
             $score = $this->calculateMatch($user, $row);
-            array_push($matches, array('userid' => $row['userid'], 'score' => $score));
+            array_push($matches, array('profile' => $row, 'score' => $score));
         }
 
         usort($matches, function($item1, $item2)
@@ -285,7 +289,17 @@ class Usermodel extends CI_Model
                             return 0;
                         });
 
-        return $matches;
+        $profiles = array_map(function($match){
+        	return $match['profile'];
+        }, $matches);
+        
+        foreach ($profiles as &$profile) {
+            if(!empty($profile)) {
+            	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
+            }
+        }
+        
+        return $profiles;
     }
 
     public function calculateMatch($user1, $user2)

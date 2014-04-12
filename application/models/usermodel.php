@@ -172,9 +172,16 @@ class Usermodel extends CI_Model
 
     public function getLikedProfiles()
     {
+    	global $userid;
         $userid = $this->session->userdata('userid');
         $profiles = $this->db->get('profiles')->result_array();
-        $profiles = array_filter($profiles, function($profile) { global $userid; return in_array($userid, explode(',', $profile['likes'])); });
+        
+        function filterLikedProfiles($profile){
+        	global $userid;
+        	return in_array($userid, explode(',', $profile['likes']));
+        }
+        
+        $profiles = array_filter($profiles, 'filterLikedProfiles');
         
         foreach ($profiles as &$profile) {
             if(!empty($profile)) {
@@ -183,6 +190,29 @@ class Usermodel extends CI_Model
         }
         
         return $profiles;   
+    }
+    
+    public function getMutualLikesProfiles()
+    {
+    	global $liked_ids;
+    	
+    	// people who like me
+    	$liked = $this->getLikedProfiles();
+    	
+    	// ids of those people
+    	$liked_ids = array_map(function($x){
+    		return $x['userid'];
+    	}, $liked);
+    	
+    	function filterConnections($y){
+    		global $liked_ids;
+    		return in_array($y['userid'], $liked_ids);
+    	}
+    	
+    	// people I like, filtering out those who do not like me back
+    	$profiles = array_filter($this->getLikeProfiles(), 'filterConnections');
+    	
+    	return $profiles;
     }
 
     public function getSortedMatchesForUser($userid = -1)

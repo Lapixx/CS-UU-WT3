@@ -44,7 +44,7 @@ class Profiles extends CI_Controller {
 			exit;
 		}
 		
-		$profiles = array_intersect($this->my_likes(), $this->like_me());
+		$profiles = $this->usermodel->getMutualLikesProfiles();		
 		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'Connections'));
 	}
 	

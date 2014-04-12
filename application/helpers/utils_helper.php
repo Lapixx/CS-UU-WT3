@@ -31,3 +31,24 @@ function dob_to_age($dob) {
 function avatar_url($id) {
 	return base_url() . 'profiles/avatar/' . $id;
 }
+
+function build_view($self, $name, $data) {
+
+		// load current profile when available
+		$currentProfile = false;
+		if($self->session->userdata('userid'))
+			$currentProfile = $self->usermodel->getProfileByID($self->session->userdata('userid'));
+	
+		// Build the page
+		$self->load->view('partials/header', array(
+			'currentProfile' => $currentProfile
+		));
+		
+		if(!$self->session->userdata('userid'))
+			$self->load->view('partials/promo');
+			
+		// load requested view
+		$self->load->view($name, $data);
+		
+		$self->load->view('partials/footer');
+}

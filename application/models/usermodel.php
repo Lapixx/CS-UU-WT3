@@ -35,6 +35,7 @@ class Usermodel extends CI_Model
         	array_push($random_results, $results[$i]);
         }
         
+        shuffle($random_results);
         return $random_results;
     }
 

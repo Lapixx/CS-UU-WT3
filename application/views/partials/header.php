@@ -16,10 +16,10 @@
 			<li><b><a href="<?=base_url()?>home">Yeaahh!</a></b></li>
 			
 			<?php if($this->session->userdata('userid')) { ?>
-			
-				<li class="right"><a href="<?=base_url()?>home">Profile settings</a></li>		
+									
+				<li class="right"><a href="<?=base_url()?>logout">Sign out (<?=$currentProfile['firstname']?>)</a></li>
 				<li class="right">&bull;</li>
-				<li class="right"><a href="<?=base_url()?>logout">Sign out</a></li>
+				<li class="right"><a href="<?=base_url()?>home">Profile settings</a></li>
 			
 			<?php } else { ?>
 			

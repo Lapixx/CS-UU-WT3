@@ -76,7 +76,8 @@ class Usermodel extends CI_Model
 
         $session_data = array(
                             'userid' => $user['userid'],
-                            'email' => $user['email']
+                            'email' => $user['email'],
+                            'admin' => $user['admin']
                         );
 
         $this->session->set_userdata($session_data);

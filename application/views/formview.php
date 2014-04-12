@@ -37,4 +37,3 @@
 
 	echo form_fieldset_close(); 
 	echo form_error('brands') . '<br />';
-?>

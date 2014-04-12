@@ -3,4 +3,3 @@
 	$this->load->view('formview');
 	echo form_submit('search', 'Search');
 	echo form_close();
-?>

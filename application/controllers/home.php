@@ -8,8 +8,10 @@ class Home extends CI_Controller {
 		$dbg = array_merge($this->usermodel->getUserByID(2), $this->usermodel->getProfileByID(2));
 	
 		$data = array('profiles' => $profiles, 'dbg' => $dbg);
-		$this->load->view('header');
+		$this->load->view('partials/header');
+		if(!$this->session->userdata('userid'))
+			$this->load->view('partials/promo');
 		$this->load->view('home', $data);
-		$this->load->view('footer');
+		$this->load->view('partials/footer');
 	}
 }

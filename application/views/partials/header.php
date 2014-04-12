@@ -11,9 +11,7 @@
 <body>
 
 	<a href="<?=base_url()?>home"><h1>yeaahh</h1></a>
-	
-	<img src="<?=img_url()?>yeaahh.jpg" /><br/>
-	
+		
 	<?php if($this->session->userdata('userid')) { ?>
 	
 		Logged in, whoop! <a href="<?=base_url()?>logout">Sign out</a>

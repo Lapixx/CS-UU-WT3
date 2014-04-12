@@ -2,7 +2,7 @@
 
 class Brandmodel extends CI_Model 
 {
-    public function getBrandNames()
+    public function getAllBrandNames()
     {
         $query = $this->db->get('brands');
         $result = array();
@@ -10,6 +10,17 @@ class Brandmodel extends CI_Model
             $result[$row['brandid']] = $row['name'];
         }
         asort($result);
+        return $result;
+    }
+
+    public function getBrandNames($ids)
+    {
+        $this->db->where_in('brandid', $ids);
+        $query = $this->db->get('brands');
+        $result = array();
+        foreach ($query->result_array() as $row) {
+            array_push($result, $row['name']);
+        }
         return $result;
     }
 }

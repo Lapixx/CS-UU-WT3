@@ -48,9 +48,6 @@ function build_view($self, $name, $data) {
 			'currentProfile' => $currentProfile,
 			'title' => $title
 		));
-		
-		if(!$self->session->userdata('userid'))
-			$self->load->view('partials/promo');
 			
 		// load requested view
 		$self->load->view($name, $data);

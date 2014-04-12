@@ -1,6 +1,6 @@
-<br/><hr/><br/>
-
-All rights forebehelded.
+<footer>
+All rights forebehelded &copy; 1990
+</footer>
 
 </body>
 

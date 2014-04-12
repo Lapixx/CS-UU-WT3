@@ -5,21 +5,31 @@
 <head>
 
 <title>Yeaahh!</title>
+<link href="<?=css_url()?>defaults.css" rel="stylesheet" type="text/css" media="all">
 
 </head>
 
 <body>
 
-	<a href="<?=base_url()?>home"><h1>yeaahh</h1></a>
-		
-	<?php if($this->session->userdata('userid')) { ?>
+	<nav class="sitenav">
+		<ul>
+			<li><b><a href="<?=base_url()?>home">Yeaahh!</a></b></li>
+			
+			<?php if($this->session->userdata('userid')) { ?>
+			
+				<li class="right"><a href="<?=base_url()?>home">Profile settings</a></li>		
+				<li class="right">&bull;</li>
+				<li class="right"><a href="<?=base_url()?>logout">Sign out</a></li>
+			
+			<?php } else { ?>
+			
+				<li class="right"><a href="<?=base_url()?>login">Sign in</a></li>
+				<li class="right">&bull;</li>
+				<li class="right"><a href="<?=base_url()?>register">Register</a></li>
+			
+			<?php } ?>
+			
+		</ul>			
+	</nav>
 	
-		Logged in, whoop! <a href="<?=base_url()?>logout">Sign out</a>
-	
-	<?php } else { ?>
-	
-		<a href="<?=base_url()?>login">Sign in</a> or <a href="<?=base_url()?>register">Register</a>
-	
-	<?php } ?>
-	
-	<br/><hr/><br/>
+	<div id="wrap">

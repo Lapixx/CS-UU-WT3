@@ -1,0 +1,132 @@
+/* Reset margins and paddings */
+*{
+	margin: 0px;
+	padding: 0px;
+}
+
+@font-face {
+    font-family: 'Source Sans Pro';
+    src: url('fonts/sourcesanspro-bold.eot');
+    src: url('fonts/sourcesanspro-bold.eot?#iefix') format('embedded-opentype'),
+         url('fonts/sourcesanspro-bold.woff') format('woff'),
+         url('fonts/sourcesanspro-bold.ttf') format('truetype'),
+         url('fonts/sourcesanspro-bold.svg#source_sans_probold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Neuton Bold';
+    src: url('fonts/neuton-bold.eot');
+    src: url('fonts/neuton-bold.eot?#iefix') format('embedded-opentype'),
+         url('fonts/neuton-bold.woff') format('woff'),
+         url('fonts/neuton-bold.ttf') format('truetype'),
+         url('fonts/neuton-bold.svg#neutonbold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Neuton';
+    src: url('fonts/neuton-regular.eot');
+    src: url('fonts/neuton-regular.eot?#iefix') format('embedded-opentype'),
+         url('fonts/neuton-regular.woff') format('woff'),
+         url('fonts/neuton-regular.ttf') format('truetype'),
+         url('fonts/neuton-regular.svg#neutonregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+body{
+	background-color: #FAFAFA;
+	font-family: 'Neuton', serif;
+	-webkit-font-smoothing: antialiased;
+	font-size: 18px;
+	line-height: 1.4;
+}
+
+h1, h2, h3, b, nav {
+	font-family: 'Source Sans Pro', sans-serif;
+}
+
+#wrap {
+	width: 960px;
+	margin: 80px auto 0px;
+}
+
+#wrap > main, #wrap > article{
+	padding: 0px 25px 100px;
+}
+
+p{
+	text-align: justify;
+	margin-bottom: 10px;	
+}
+
+a{
+	color: #0044CC;
+	text-decoration: underline;
+}
+
+a:hover{
+	text-decoration: none;
+}
+
+footer{
+	margin-top: 20px;
+	border-top: 1px solid #FFFFFF;	
+	box-shadow: 0px -1px 0px #E0E0E0;
+}
+
+nav.sitenav{
+	position: fixed;
+	top: 0px;
+	width: 100%;
+	padding: 20px 20px;
+	text-align: left;
+	background-color: #5500AA;
+	box-sizing: border-box;
+	box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+	-moz-box-shadow: 0 1px 1px rgba(0, 0, 0, 0.5);
+	z-index: 100;
+}
+
+nav ul{
+	list-style: none;
+}
+
+nav ul li{
+	display: inline;
+	margin: 0px 5px;
+	color: rgba(255, 255, 255, 0.5);
+}
+
+nav ul li.right {
+	float: right;
+}
+
+nav ul li a{
+	color: #EEDDFF;
+	text-decoration: none;
+}
+
+nav ul li a:hover{
+	color: #FFFFFF;
+}
+
+div.profileCard {
+	display: inline-block;
+	border: 2px solid #5500AA;
+	padding: 20px;
+	margin: 10px;
+	border-radius: 10px;
+	text-align: left;
+}
+div.center{
+	margin-left: auto;
+	margin-right: auto;
+	text-align: center;
+}
+div.profileCard img {
+	border-radius: 4px;
+}

@@ -27,6 +27,33 @@ class Usermodel extends CI_Model
 		return $profiles;
 	}
 	
+	private function addLikeStatus($profile) {
+		$profile['like'] = $this->doesLike($profile['userid']);
+		$profile['liked'] = $this->doesLiked($profile['userid']);
+		return $profile;
+	}
+	
+	private function compileProfile($profile) {
+		$profile = $this->resolveBrands($profile);
+		$profile = $this->addLikeStatus($profile);
+		return $profile;
+	}
+	
+	private function compileProfiles($profiles, $include_me = false) {
+		$profiles = $this->resolveBrands($profiles);
+		
+		foreach ($profiles as &$profile) {
+		    if(!empty($profile)) {
+				$profile = $this->addLikeStatus($profile);
+			}
+		}
+		
+		if(!$include_me)
+			$profiles = $this->ignoreMe($profiles);
+			
+		return $profiles;
+	}
+	
     public function getUserByID($id)
     {
         $query = $this->db->get_where('users', array('userid' => $id));
@@ -44,8 +71,7 @@ class Usermodel extends CI_Model
         $query = $this->db->get_where('profiles', array('userid' => $id));
         $profile = $query->row_array();
         
-		// replace brand IDs with brand names
-        return $this->resolveBrands($profile);
+        return $this->compileProfile($profile);
     }
     
     public function getRandomProfiles($n)
@@ -59,14 +85,13 @@ class Usermodel extends CI_Model
 		if ($n === 1) return array($results[$random_keys]);
 		
         $random_results = array();
-        foreach ($random_keys as $i) {
-        	$profile = $results[$i];
-        	
-        	// replace brand IDs with brand names
-        	$profile = $this->resolveBrands($profile);
-        	shuffle($profile['brands']);
-        	
-        	array_push($random_results, $profile);
+        foreach ($random_keys as $i) {        	
+        	array_push($random_results, $results[$i]);
+        }
+        
+        $random_results = $this->compileProfiles($random_results);
+        foreach ($random_results as &$profile) {
+        	shuffle($profile['brands']);  
         }
         
         shuffle($random_results);
@@ -207,7 +232,7 @@ class Usermodel extends CI_Model
         $this->db->where_in('userid', $exp);
         $profiles = $this->db->get('profiles')->result_array();
         
-        $profiles = $this->resolveBrands($profiles);
+        $profiles = $this->compileProfiles($profiles);
                 
         return $profiles;        
     }
@@ -225,7 +250,7 @@ class Usermodel extends CI_Model
         
         $profiles = array_filter($profiles, 'filterLikedProfiles');
         
-        $profiles = $this->resolveBrands($profiles);
+        $profiles = $this->compileProfiles($profiles);
         
         return $profiles;   
     }
@@ -306,7 +331,7 @@ class Usermodel extends CI_Model
         	return $match['profile'];
         }, $matches);
         
-        $profiles = $this->resolveBrands($profiles);
+        $profiles = $this->compileProfiles($profiles);
         
         return $profiles;
     }

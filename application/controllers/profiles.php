@@ -5,11 +5,10 @@ class Profiles extends CI_Controller {
 	public function details($id)
 	{	
 		$profile = $this->usermodel->getProfileByID($id);
+		$user = $this->usermodel->getUserByID($id);
+		$profile['email'] = $user['email'];
 		
-		$like = $this->usermodel->doesLike($id);
-		$liked = $this->usermodel->doesLiked($id);
-		
-		build_view($this, 'profile_details', array('profile' => $profile, 'title' => $profile['nickname'], 'like' => $like, 'liked' => $liked));
+		build_view($this, 'profile_details', array('profile' => $profile, 'title' => $profile['nickname']));
 	}
 	
 	public function my_likes()

@@ -6,7 +6,13 @@ if (!empty($profiles)) {
 
 <div class="profileCard">
 	<div class="center">
-		<a href="<?=base_url()?>profiles/details/<?=$profile['userid']?>"><img src="<?=avatar_url($profile['userid'])?>" /></a>
+		<a href="<?=base_url()?>profiles/details/<?=$profile['userid']?>">
+			<div class="avatar">
+				<img src="<?=avatar_url($profile['userid'])?>" />
+				<?php if($profile['like']){ ?><span>&#10084;</span><?php } ?>
+				<?php if($profile['liked']){ ?><span class="like_me">&#10084;</span><?php } ?>
+			</div>
+		</a>
 		<br/>
 		<a href="<?=base_url()?>profiles/details/<?=$profile['userid']?>"><b><?=$profile['nickname']?></b></a> (<?=dob_to_age($profile['dob'])?>, <?=strtoupper($profile['gender'][0])?>)</a>
 	</div>

@@ -127,16 +127,60 @@ class Usermodel extends CI_Model
         return in_array($user, $exp);
     }
 
-    public function getSortedMatches()
+    public function getSortedMatchesForUser($userid = -1)
     {
+        if ($userid == -1) {
+            $userid = $this->session->userdata('userid');
+        }
+        $user = $this->db->get_where('profiles', array('userid' => $userid))->row_array();
 
+        return $this->getSortedMatches($user);
     }
 
-    public function calculateMatch($userid1, $userid2)
+    public function getSortedMatches($user)
     {
-        $user1 = $this->db->get_where('profiles', array('userid' => $userid1))->row_array();
-        $user2 = $this->db->get_where('profiles', array('userid' => $userid2))->row_array();
+        $this->db->where_not_in('userid', array($user['userid']));
+        $otherUsers = $this->db->get('profiles')->result_array();
 
+        $preferredGender = $this->genderPreferenceToGender($user['gender_preference']);
+        $age = dob_to_age($user['dob']);
+        $matches = array();
+        foreach ($otherUsers as $row) {
+            $rowAge = dob_to_age($row['dob']);
+
+            if ($user['gender_preference'] != 'both' && $row['gender'] != $preferredGender) {
+                continue;
+            }
+            if ($user['min_age'] > $rowAge || $user['max_age'] < dob_to_age($row['dob'])) {
+                continue;
+            }
+
+            if ($row['gender_preference'] != 'both' && $user['gender'] != $this->genderPreferenceToGender($row['gender_preference'])) {
+                continue;
+            }
+            if ($row['min_age'] > $age || $row['max_age'] < $age) {
+                continue;
+            }
+
+            // mutual match
+            $score = $this->calculateMatch($user, $row);
+            array_push($matches, array('userid' => $row['userid'], 'score' => $score));
+        }
+
+        usort($matches, function($item1, $item2)
+                        {
+                            if ($item1['score'] < $item2['score'])
+                                return -1;
+                            if ($item2['score'] < $item1['score'])
+                                return 1;
+                            return 0;
+                        });
+
+        return $matches;
+    }
+
+    public function calculateMatch($user1, $user2)
+    {
         $brandMatch = $this->calculateBrandMatch($user1['brands'], $user2['brands']);
         $personalityMatch = max($this->calculatePersonalityMatch($user1['personality_preference'], $user2['personality']),
                                 $this->calculatePersonalityMatch($user2['personality_preference'], $user1['personality']));
@@ -193,5 +237,18 @@ class Usermodel extends CI_Model
         }
 
         return $salt;
+    }
+
+    private function genderPreferenceToGender($pref)
+    {
+        switch ($pref)
+        {
+            case 'men':
+                return 'male';
+            case 'women':
+                return 'female';
+            case 'both':
+                return 'both';
+        }
     }
 }

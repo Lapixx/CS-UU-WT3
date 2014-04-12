@@ -4,13 +4,12 @@ class Brandmodel extends CI_Model
 {
     public function getBrandNames()
     {
-        $this->db->select('name');
         $query = $this->db->get('brands');
         $result = array();
         foreach ($query->result_array() as $row) {
-            array_push($result, $row['name']);
+            $result[$row['brandid']] = $row['name'];
         }
-        sort($result);
+        asort($result);
         return $result;
     }
 }

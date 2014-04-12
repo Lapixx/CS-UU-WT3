@@ -22,9 +22,7 @@ class Profiles extends CI_Controller {
 		
 		// not yet liked
 		if(!in_array($id, $profile['likes'])) {
-			
-			// @TODO add $id to ['likes']
-			// @TODO recalculate preferences
+			$this->usermodel->like($id);
 		}
 		
 		// back to profile

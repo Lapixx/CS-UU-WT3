@@ -6,7 +6,7 @@ class Register extends ProfileForm {
 	{
         ProfileForm::index();
 
-        $data = array('brands' => $this->brandmodel->getBrandNames(), 'questions' => $this->questions);
+        $data = array('brands' => $this->brandmodel->getBrandNames(), 'questions' => $this->questions, 'title' => 'Register');
         if ($this->form_validation->run()) {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
@@ -20,8 +20,6 @@ class Register extends ProfileForm {
             }
         }
 
-		$this->load->view('partials/header');
-        $this->load->view('register', $data);
-        $this->load->view('partials/footer');
+        build_view($this, 'register', $data);
 	}
 }

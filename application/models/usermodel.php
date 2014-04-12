@@ -17,7 +17,12 @@ class Usermodel extends CI_Model
     public function getProfileByID($id)
     {
         $query = $this->db->get_where('profiles', array('userid' => $id));
-        return $query->row_array();
+        $profile = $query->row_array();
+        
+		// replace brand IDs with brand names
+        $profile['brands'] = $this->brandmodel->getBrandNames($profile['brands']);
+        
+        return $profile;
     }
     
     public function getRandomProfiles($n)
@@ -32,7 +37,12 @@ class Usermodel extends CI_Model
 		
         $random_results = array();
         foreach ($random_keys as $i) {
-        	array_push($random_results, $results[$i]);
+        	$profile = $results[i];
+        	
+        	// replace brand IDs with brand names
+        	$profile['brands'] = $this->brandmodel->getBrandNames($profile['brands']);
+        	
+        	array_push($random_results, $profile);
         }
         
         shuffle($random_results);

@@ -82,7 +82,8 @@ nav.sitenav{
 	position: fixed;
 	top: 0px;
 	width: 100%;
-	padding: 20px 20px;
+	padding: 0px;
+	margin: 0px;
 	text-align: left;
 	background-color: #5500AA;
 	box-sizing: border-box;
@@ -93,6 +94,8 @@ nav.sitenav{
 
 nav ul{
 	list-style: none;
+	margin: 12px 20px;
+	vertical-align: middle;
 }
 
 nav ul li{
@@ -101,8 +104,23 @@ nav ul li{
 	color: rgba(255, 255, 255, 0.5);
 }
 
+nav ul li b a{
+	font-size: 30px;
+	background-color: #EEDDFF;
+	color: #5500AA;
+	padding: 2px 10px;
+	margin-right: 10px;
+	border-radius: 4px;
+}
+nav ul li b a:hover{
+	color: #5500AA;
+	background-color: #FFFFFF;
+}
+
 nav ul li.right {
 	float: right;
+	position: relative;
+	top: 10px;
 }
 
 nav ul li a{

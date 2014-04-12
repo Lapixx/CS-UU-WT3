@@ -39,9 +39,14 @@ function build_view($self, $name, $data) {
 		if($self->session->userdata('userid'))
 			$currentProfile = $self->usermodel->getProfileByID($self->session->userdata('userid'));
 	
+		$title = '';
+		if(isset($data) && array_key_exists('title', $data))
+			$title = $data['title'];
+	
 		// Build the page
 		$self->load->view('partials/header', array(
-			'currentProfile' => $currentProfile
+			'currentProfile' => $currentProfile,
+			'title' => $title
 		));
 		
 		if(!$self->session->userdata('userid'))

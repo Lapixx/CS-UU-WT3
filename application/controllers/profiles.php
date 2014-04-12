@@ -5,9 +5,7 @@ class Profiles extends CI_Controller {
 	public function details($id)
 	{	
 		$profile = $this->usermodel->getProfileByID($id);
-		$this->load->view('partials/header');
-		$this->load->view('profile_details', array('profile' => $profile));
-		$this->load->view('partials/footer');
+		build_view($this, 'profile_details', array('profile' => $profile, 'title' => $profile['nickname']));
 	}
 	
 	public function avatar($id){

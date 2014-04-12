@@ -23,9 +23,9 @@ class Login extends CI_Controller {
 
             $data['failed'] = true;
         }
+        
+        $data['title'] = 'Sign in';
 
-		$this->load->view('partials/header');
-        $this->load->view('login', $data);
-        $this->load->view('partials/footer');
+        build_view($this, 'login', $data);
 	}
 }

@@ -18,7 +18,7 @@ if (!empty($profiles)) {
 	<br/>
 	
 	Personality: <?=$profile['personality']?><br/>
-	Brands: <?=implode(', ', array_slice(explode(',', $profile['brands']), 0, 3))?><br/>
+	Brands: <?=implode(', ', array_slice($profile['brands'], 0, 3))?><br/>
 	<?=$profile['description']?>
 </div>
 

@@ -37,7 +37,7 @@ class Usermodel extends CI_Model
 		
         $random_results = array();
         foreach ($random_keys as $i) {
-        	$profile = $results[i];
+        	$profile = $results[$i];
         	
         	// replace brand IDs with brand names
         	$profile['brands'] = $this->brandmodel->getBrandNames($profile['brands']);

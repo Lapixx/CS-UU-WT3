@@ -1,5 +1,6 @@
 <?php
-//print_r($profile);exit;
+
+echo '<img src="'.avatar_url($profile['userid']).'" /><br/>';
 echo '<b>'.$profile['nickname'].':</b><br/>';
 echo $profile['gender'].'<br/>';
 echo $profile['dob'].'<br/>';

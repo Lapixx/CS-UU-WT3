@@ -19,15 +19,14 @@
 		<a href="<?=base_url()?>login">Sign in</a> or <a href="<?=base_url()?>register">Register</a>
 
 	<?php } ?>
-	
-	<br/><br/><hr/><br/><br/>
+		
 	
 	<?php
 		if (!empty($profiles)) {
 			foreach ($profiles as $profile) {
 				echo '<div>';
 				echo '<a href="'.base_url().'profiles/details/'.$profile['userid'].'">';
-				echo '<img src="<?=img_url()?>yeaahh.jpg" />';
+				echo '<img src="'.avatar_url($profile['userid']).'" />';
 				echo '</a><br/>';
 				echo '<a href="'.base_url().'profiles/details/'.$profile['userid'].'">';
 				echo '<b>'.$profile['nickname'].'</b>';

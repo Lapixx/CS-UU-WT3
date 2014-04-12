@@ -127,6 +127,62 @@ class Usermodel extends CI_Model
         return in_array($user, $exp);
     }
 
+    public function getSortedMatches()
+    {
+
+    }
+
+    public function calculateMatch($userid1, $userid2)
+    {
+        $user1 = $this->db->get_where('profiles', array('userid' => $userid1))->row_array();
+        $user2 = $this->db->get_where('profiles', array('userid' => $userid2))->row_array();
+
+        $brandMatch = $this->calculateBrandMatch($user1['brands'], $user2['brands']);
+        $personalityMatch = max($this->calculatePersonalityMatch($user1['personality_preference'], $user2['personality']),
+                                $this->calculatePersonalityMatch($user2['personality_preference'], $user1['personality']));
+
+        $weight = $this->db->get_where('settings', array('name' => 'mix_weight'))->row_array();
+        $weight = $weight['value'];
+
+        return $weight * $personalityMatch + (1 - $weight) * $brandMatch;
+    }
+
+    public function calculateBrandMatch($brands1, $brands2)
+    {
+        $type = $this->db->get_where('settings', array('name' => 'match_type'))->row_array();
+        $type = $type['value'];
+        $brandsArray1 = explode(',', $brands1); $brandsArray2 = explode(',', $brands2);
+        $size1 = count($brandsArray1); $size2 = count($brandsArray2);
+        $overlap = count(array_intersect($brandsArray1, $brandsArray2));
+
+        $match;
+        switch ($type)
+        {
+            case 'dice':
+                $match = 2 * $overlap / ($size1 + $size2);
+                break;
+            case 'jaccard':
+                $match = $overlap / count($brandsArray1 + $brandsArray2);
+                break;
+            case 'cosine':
+                $match = $overlap / (sqrt($size1) * sqrt($size2));
+                break;
+            case 'overlap':
+                $match = $overlap / min($size1, $size2);
+                break;
+        }
+
+        return 1 - $match;
+    }
+
+    public function calculatePersonalityMatch($preference, $personality)
+    {
+        $prefArray = explode(',', $preference); $persArray = explode(',', $personality);
+        $diffs = array_map(function($a, $b) { return abs($a - $b); }, $prefArray, $persArray);
+        $sum = array_reduce($diffs, function($a, $b) { return $a + $b; });
+        return $sum / 400;
+    }
+
     // source: http://www.techrepublic.com/blog/australian-technology/securing-passwords-with-blowfish/
     private function generateSalt()
     {

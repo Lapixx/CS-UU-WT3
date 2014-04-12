@@ -29,12 +29,16 @@ class Register extends CI_Controller {
             $profile = $this->buildProfile();
 
             if ($this->usermodel->tryRegister($email, $password) && $this->usermodel->tryUpdateProfile($email, $profile)) {
+            	$this->load->view('header');
                 $this->load->view('registersuccess');
+                $this->load->view('footer');
                 return;
             }
         }
 
+		$this->load->view('header');
         $this->load->view('register', $data);
+        $this->load->view('footer');
 	}
 
     public function date_valid($date) {

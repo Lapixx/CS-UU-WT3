@@ -6,6 +6,6 @@ class Logout extends CI_Controller {
 	{
 		$this->session->sess_destroy();
         $this->load->helper('url');
-        redirect("/welcome");
+        redirect("/home");
 	}
 }

@@ -1,6 +1,6 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Welcome extends CI_Controller {
+class Home extends CI_Controller {
 
 	public function index()
 	{	
@@ -8,6 +8,8 @@ class Welcome extends CI_Controller {
 		$dbg = array_merge($this->usermodel->getUserByID(2), $this->usermodel->getProfileByID(2));
 	
 		$data = array('profiles' => $profiles, 'dbg' => $dbg);
-		$this->load->view('welcome_message', $data);
+		$this->load->view('header');
+		$this->load->view('home', $data);
+		$this->load->view('footer');
 	}
 }

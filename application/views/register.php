@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="utf-8">
-<title>Register</title>
-</head>
-<body>
-
 <?php echo form_open('register'); ?>
 
 <?php echo form_label('Email', 'email'); ?>
@@ -100,5 +92,3 @@
 <?php echo form_submit('register', 'Register'); ?>
 
 </form>
-</body>
-</html>

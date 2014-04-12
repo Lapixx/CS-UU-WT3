@@ -5,7 +5,7 @@ class Login extends CI_Controller {
 	public function index()
 	{
 		if($this->session->userdata('userid')) {
-			redirect("/welcome");
+			redirect("/home");
 		}
 		
         $this->form_validation->set_rules('email', 'Email', 'required|valid_email');
@@ -17,14 +17,15 @@ class Login extends CI_Controller {
             $password = $this->input->post('password');
 
             if ($this->usermodel->tryLogin($email, $password)) {
-                //$this->load->view('loginsuccess');
-                redirect("/welcome");
+                redirect("/home");
                 return;
             }
 
             $data['failed'] = true;
         }
 
+		$this->load->view('header');
         $this->load->view('login', $data);
+        $this->load->view('footer');
 	}
 }

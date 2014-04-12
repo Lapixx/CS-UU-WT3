@@ -55,4 +55,3 @@
 
 	echo form_submit('register', 'Register');
 	echo form_close();
-?>

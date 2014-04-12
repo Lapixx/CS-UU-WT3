@@ -151,6 +151,24 @@ class Usermodel extends CI_Model
         return in_array($userid, $exp);
     }
 
+    public function getLikeProfiles()
+    {
+        $userid = $this->session->userdata('userid');
+        $this->db->select('likes');
+        $likes = $this->db->get_where('profiles', array('userid' => $user['userid']))->row_array();
+        $exp = explode(',', $likes['likes']);
+
+        $this->db->where_in('userid', $exp);
+        return $this->db->get('profiles')->result_array();
+    }
+
+    public function getLikedProfiles()
+    {
+        $userid = $this->session->userdata('userid');
+        $profiles = $this->db->get('profiles')->result_array();
+        return array_filter($profiles, function($profile) { return in_array($userid, explode(',', $profile['likes'])); });
+    }
+
     public function getSortedMatchesForUser($userid = -1)
     {
         if ($userid == -1) {

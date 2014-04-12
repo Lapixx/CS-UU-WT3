@@ -28,12 +28,12 @@ class Usermodel extends CI_Model
 		global $myid;
 		$myid = $this->session->userdata('userid');
 		
-	
-		function filterIgnoreMe($profile){
-			global $myid;
-			return $profile['userid'] !== $myid;
+		if (!function_exists('filterIgnoreMe')) {
+			function filterIgnoreMe($profile){
+				global $myid;
+				return $profile['userid'] !== $myid;
+			}
 		}
-	
 		$profiles = array_filter($profiles, 'filterIgnoreMe');
 		return $profiles;
 	}
@@ -254,9 +254,11 @@ class Usermodel extends CI_Model
         $userid = $this->session->userdata('userid');
         $profiles = $this->db->get('profiles')->result_array();
         
-        function filterLikedProfiles($profile){
-        	global $userid;
-        	return in_array($userid, explode(',', $profile['likes']));
+        if (!function_exists('filterLikedProfiles')) {
+	        function filterLikedProfiles($profile){
+	        	global $userid;
+	        	return in_array($userid, explode(',', $profile['likes']));
+	        }
         }
         
         $profiles = array_filter($profiles, 'filterLikedProfiles');
@@ -278,9 +280,11 @@ class Usermodel extends CI_Model
     		return $x['userid'];
     	}, $liked);
     	
-    	function filterConnections($y){
-    		global $liked_ids;
-    		return in_array($y['userid'], $liked_ids);
+    	if (!function_exists('filterConnections')) {
+	    	function filterConnections($y){
+	    		global $liked_ids;
+	    		return in_array($y['userid'], $liked_ids);
+	    	}
     	}
     	
     	// people I like, filtering out those who do not like me back

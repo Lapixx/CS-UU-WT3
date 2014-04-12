@@ -8,7 +8,7 @@ class Register extends ProfileForm {
 	{
         ProfileForm::index();
 
-        $data = array('brands' => $this->brandmodel->getBrandNames(), 'questions' => $this->questions, 'title' => 'Register');
+        $data = array('brands' => $this->brandmodel->getAllBrandNames(), 'questions' => $this->questions, 'title' => 'Register');
         if ($this->form_validation->run()) {
             $email = $this->input->post('email');
             $password = $this->input->post('password');
@@ -22,11 +22,13 @@ class Register extends ProfileForm {
             }
         }
 
-        build_view($this, 'register', $data);
+        $this->load->view('partials/header');
+        $this->load->view('register', $data);
+        $this->load->view('partials/footer');
 	}
 
     // (Question number, Option A, Option B, Option C, Affected parameter, Effect in %)
-    private $questions = array(
+    public $questions = array(
             array('I prefer large groups of people, with a high degree of diversity.', 'I prefer intimate gatherings with only close friends.', 'I am really inbetween.', 'I', '-10'),
             array('I act first, then think.', 'I think first, then act.', 'I am really inbetween.', 'I', '-10'),
             array('I am easily distracted and am less interested in specific tasks.', 'I can concentrate well and am less interested in the big picture.', 'I am really inbetween.', 'I', '-10'),

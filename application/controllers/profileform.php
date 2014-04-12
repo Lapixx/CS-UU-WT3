@@ -16,6 +16,7 @@ class ProfileForm extends CI_Controller {
         $this->form_validation->set_rules('dob', 'Date of birth', 'required|callback_date_valid');
         $this->form_validation->set_rules('description', 'About you', 'required');
         $this->form_validation->set_rules('gender_pref', 'Gender preference', 'required');
+        $this->form_validation->set_rules('brands', 'Brands', 'callback_brands_valid');
         $this->form_validation->set_rules('brands[]', 'Brands', 'callback_brands_valid');
         $this->form_validation->set_rules('questions', 'Questions', 'callback_questions_valid');
 
@@ -71,7 +72,7 @@ class ProfileForm extends CI_Controller {
         return count($questions) == count($this->questions);
     }
 
-    private function buildPersonality() {
+    public function buildPersonality() {
         $pers = array('I' => 50, 'N' => 50, 'T' => 50, 'P' => 50);
 
         $answers = $this->input->post('questions');
@@ -93,7 +94,7 @@ class ProfileForm extends CI_Controller {
         return $pers;
     }
 
-    private function buildProfile() {
+    public function buildProfile() {
         $profile = array();
 
         $profile['firstname'] = $this->input->post('first_name');

@@ -113,7 +113,7 @@ class Usermodel extends CI_Model
             $this->db->where('userid', $user['userid']);
             $this->db->update('profiles', $profile);
         }
-        
+
         return $this->db->affected_rows() > 0;
     }
 

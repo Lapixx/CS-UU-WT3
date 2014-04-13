@@ -31,7 +31,7 @@
 			
 			<?php } else { ?>
 			
-				<li><a href="<?=base_url()?>home">Search</a></li>
+				<li><a href="<?=base_url()?>search">Search</a></li>
 							
 				<li class="right"><a href="<?=base_url()?>login">Sign in</a></li>
 				<li class="right">&bull;</li>

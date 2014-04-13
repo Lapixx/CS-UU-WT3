@@ -54,3 +54,44 @@ function build_view($self, $name, $data) {
 		
 		$self->load->view('partials/footer');
 }
+
+function him_her($gender, $him = 'him', $her = 'her'){
+	if(is_array($gender) && array_key_exists('gender', $gender))
+		$gender = $gender['gender'];
+	return ($gender === 'male') ? $him : $her;
+}
+
+function format_mbti($scores, $returnAsString = false){
+	if(!is_array($scores)){
+		$scores = explode(',', $scores);
+		foreach ($scores as &$s) {
+			$s = intval($s);
+		}
+	}
+	
+	$formatted = array();
+	$mbti_types = array('EI','NS','TF','JP');
+	
+	foreach ($scores as $i => $score) {
+		if($score < 50) {
+			$score = 100 - $score;
+			$formatted[] = $mbti_types[$i][1] . ' (' . round($score) . '%)';
+		}
+		else{
+			$formatted[] = $mbti_types[$i][0] . ' (' . round($score) . '%)';
+		}
+	}
+	
+	if ($returnAsString) {
+		return implode(', ', $formatted);
+	}
+	return $formatted;
+}
+
+
+
+
+
+
+
+

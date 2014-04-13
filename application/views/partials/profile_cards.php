@@ -19,7 +19,7 @@ if (!empty($profiles)) {
 	
 	<br/>
 	
-	<b>Personality:</b> <?=$profile['personality']?><br/>
+	<b>Personality:</b> <?=format_mbti($profile['personality'], true)?><br/>
 	<b>Brands:</b> <?=implode(', ', array_slice($profile['brands'], 0, 5))?><br/>
 	
 	<br/>

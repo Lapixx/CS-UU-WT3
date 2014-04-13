@@ -9,18 +9,17 @@ echo '<b>'.$profile['nickname'].'</b><br/><br/>';
 
 // connection
 if($profile['like'] && $profile['liked']) {
-	echo '<b>Name:</b> '.$profile['firstname'].' '.$profile['lastname'].'<br/>';
-	echo '<b>E-mail:</b> <a href="mailto:'.$profile['email'].'">'.$profile['email'].'</a><br/><br/>';
+	echo '<b>Connected to '.$profile['firstname'].' '.$profile['lastname'].'! <a href="mailto:'.$profile['email'].'">Send '.him_her($profile).' an e-mail</a>.</b><br/><br/>';
 }
 
 echo '<b>Gender:</b> '.ucfirst($profile['gender']).'<br/>';
 echo '<b>Date of Birth:</b> '.$profile['dob'].'<br/>';
-echo '<b>Personality:</b> '.$profile['personality'].'<br/>';
+echo '<b>Personality:</b> '.format_mbti($profile['personality'], true).'<br/>';
 echo '<b>Brands:</b> '.implode(', ', $profile['brands']).'<br/>';
 echo '<b>Description:</b> '.$profile['description'].'<br/></br>';
 
 echo '<b>Gender preference:</b> '.ucfirst($profile['gender_preference']).'<br/>';
-echo '<b>Personality preference:</b> '.$profile['personality_preference'].'<br/>';
+echo '<b>Personality preference:</b> '.format_mbti($profile['personality_preference'], true).'<br/>';
 echo '<b>Age preference:</b> '.$profile['min_age'].'-'.$profile['max_age'].'<br/><br/>';
 	
 if(!$this->session->userdata('userid')) {	
@@ -29,8 +28,10 @@ if(!$this->session->userdata('userid')) {
 else{
 
 	if (!$profile['like'] && $profile['userid'] !== $this->session->userdata('userid'))
-		echo '<a href="'.base_url().'profiles/like/'.$profile['userid'].'" class="prominent">&#10084; &#9825; &#9829; Like</a><br/';
-	echo 'You like this user!<br/>';
+		echo '<a href="'.base_url().'profiles/like/'.$profile['userid'].'" class="prominent">&#10084; Like</a><br/>';
+		
+	if ($profile['like'])
+		echo 'You like this user!<br/>';
 	
 	if ($profile['liked'])
 		echo 'This user likes you!';

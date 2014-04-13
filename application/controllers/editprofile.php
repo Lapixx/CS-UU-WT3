@@ -8,8 +8,6 @@ class EditProfile extends ProfileForm {
 	{
         ProfileForm::index();
 
-        $this->form_validation->set_rules('description', 'About you', 'required');
-
         $profile = $this->usermodel->getProfileByID($this->session->userdata('userid'));
         $defaults = array();
         $defaults['gender'] = $profile['gender'];
@@ -19,6 +17,19 @@ class EditProfile extends ProfileForm {
         $defaults['max_age'] = $profile['max_age'];
         $defaults['brands'] = explode(',', $profile['brands']);
         $defaults['description'] = $profile['description'];
+        $defaults['nickname'] = $profile['nickname'];
+        $defaults['first_name'] = $profile['firstname'];
+        $defaults['last_name'] = $profile['lastname'];
+
+        $this->form_validation->set_rules('first_name', 'First name', 'required|alpha');
+        $this->form_validation->set_rules('last_name', 'Last name', 'required|alpha');
+        if ($this->input->post('nickname') != $profile['nickname']) {
+            $this->form_validation->set_rules('nickname', 'Nickname', 'required|is_unique[profiles.nickname]|alpha_dash');
+        }
+        else {
+            $this->form_validation->set_rules('nickname', 'Nickname', 'required|alpha_dash');
+        }
+        $this->form_validation->set_rules('description', 'About you', 'required');
 
         $data = array('brands' => $this->brandmodel->getAllBrandNames(), 'title' => 'Edit profile', 'defaults' => $defaults);
         if ($this->form_validation->run()) {

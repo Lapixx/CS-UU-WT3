@@ -16,7 +16,7 @@ class Configuration extends CI_Controller {
         	$data = $this->configmodel->getSettings();
         }
 
-        build_view($this, 'search', $data);
+        build_view($this, 'configuration', $data);
 	}
 
 	public function valid_factor($x) {

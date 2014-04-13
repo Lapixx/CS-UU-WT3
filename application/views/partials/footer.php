@@ -1,5 +1,5 @@
 <footer>
-All rights forebehelded &copy; 1990
+Tijn Kersjes (3855473) &amp; Jordi Vermeulen (3835634)
 </footer>
 
 </body>

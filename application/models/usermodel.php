@@ -187,6 +187,7 @@ class Usermodel extends CI_Model
             return false;
         }
         $this->db->delete('users', array('userid' => $this->session->userdata('userid')));
+        $this->session->sess_destroy();
         return true;
     }
 

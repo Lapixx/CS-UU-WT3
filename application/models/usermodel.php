@@ -82,10 +82,12 @@ class Usermodel extends CI_Model
         return $query->row_array();
     }
 
-    public function getProfileByID($id)
+    public function getProfileByID($id, $nocompile = false)
     {
         $query = $this->db->get_where('profiles', array('userid' => $id));
         $profile = $query->row_array();
+        
+        if($nocompile) return $profile;
         
         return $this->compileProfile($profile);
     }
@@ -168,7 +170,7 @@ class Usermodel extends CI_Model
             return false;
         }
 
-        $current_profile = $this->getProfileByID($user['userid']);
+        $current_profile = $this->getProfileByID($user['userid'], true);
         if (empty($current_profile)) {
             $profile['userid'] = $user['userid'];
             $this->db->insert('profiles', $profile);

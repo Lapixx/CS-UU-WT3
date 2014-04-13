@@ -28,7 +28,7 @@ if(!$this->session->userdata('userid')) {
 else{
 
 	if($profile['userid'] == $this->session->userdata('userid'))
-		echo '<a href="'.base_url().'editprofile" class="prominent">Edit my profile</a> <a href="'.base_url().'editpicture" class="prominent">Change my picture</a><br/>';
+		echo '<a href="'.base_url().'editprofile" class="prominent">Edit my profile</a> <a href="'.base_url().'editpicture" class="prominent">Change my picture</a><br/><br/><a href="'.base_url().'deleteuser">Delete my profile... FOREVER</a> ';
 	else if (!$profile['like'])
 		echo '<a href="'.base_url().'profiles/like/'.$profile['userid'].'" class="prominent">&#10084; Like</a><br/>';
 		

@@ -6,3 +6,5 @@ Email: <input type="text" name="email" value="" size="30" /><br />
 Password: <input type="password" name="password" value="" size="30" />
 
 <div><input type="submit" value="Log in" /> or <a href="<?=base_url()?>register">Register</a></div>
+
+<?php echo form_close(); ?>

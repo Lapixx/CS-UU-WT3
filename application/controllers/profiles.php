@@ -36,7 +36,10 @@ class Profiles extends CI_Controller {
 		}
 		
 		$profiles = $this->usermodel->getLikeProfiles();
-		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People I like'));
+		if($json == 'json')
+			build_json($this, $profiles);
+		else
+			build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People I like'));
 	}
 	
 	public function like_me($page = 0, $json = false)
@@ -48,7 +51,10 @@ class Profiles extends CI_Controller {
 		}
 	
 		$profiles = $this->usermodel->getLikedProfiles();
-		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People who like me'));
+		if($json == 'json')
+			build_json($this, $profiles);
+		else
+			build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People who like me'));
 	}
 	
 	public function connections($page = 0, $json = false)
@@ -59,8 +65,11 @@ class Profiles extends CI_Controller {
 			exit;
 		}
 		
-		$profiles = $this->usermodel->getMutualLikesProfiles();		
-		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'Connections'));
+		$profiles = $this->usermodel->getMutualLikesProfiles();	
+		if($json == 'json')
+			build_json($this, $profiles);
+		else	
+			build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'Connections'));
 	}
 	
 	public function discover($page = 0, $json = false)
@@ -72,7 +81,10 @@ class Profiles extends CI_Controller {
 		}
 		
 		$profiles = $this->usermodel->getSortedMatchesForUser();		
-		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People you might like'));
+		if($json == 'json')
+			build_json($this, $profiles);
+		else
+			build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People you might like'));
 	}
 	
 	public function like($id)

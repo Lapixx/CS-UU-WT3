@@ -32,6 +32,22 @@ function avatar_url($id) {
 	return base_url() . 'profiles/avatar/' . $id;
 }
 
+function build_json($self, $data) {
+	foreach ($data as &$profile) {
+	
+		// hide some internal stuff
+		unset($profile['likes']);
+		
+		// hide some data for non-liked profiles
+		if(!$profile['like'] || !$profile['liked']){
+			unset($profile['firstname']);
+			unset($profile['lastname']);
+			unset($profile['email']);
+		}
+	}
+	$self->load->view('json', array('data' => $data));
+}
+
 function build_view($self, $name, $data) {
 
 		// load current profile when available

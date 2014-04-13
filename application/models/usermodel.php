@@ -107,7 +107,7 @@ class Usermodel extends CI_Model
         
         $random_results = $this->compileProfiles($random_results);
         foreach ($random_results as &$profile) {
-        	shuffle($profile['brands']);  
+        	shuffle($profile['brand_names']);  
         }
         
         shuffle($random_results);

@@ -1,9 +1,9 @@
-Really delete account? <br />
+<h2>Really delete account?</h2>
 
 <?php
 
 if ($failed)
-	echo 'Invalid password.<br />'
+	echo 'Invalid password.<br />';
 
 echo form_open('deleteuser');
 echo form_label('Password', 'password');

@@ -183,6 +183,7 @@ class Usermodel extends CI_Model
 
     public function deleteUser($password)
     {
+    	$user = $this->getUserByID($this->session->userdata('userid'));
         if (crypt($password, $user['password']) != $user['password']) {
             return false;
         }

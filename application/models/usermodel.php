@@ -226,9 +226,9 @@ class Usermodel extends CI_Model
     {
         $userid = $this->session->userdata('userid');
         if(!$userid) return false;
-        
+                
         $this->db->select('likes');
-        $likes = $this->db->get_where('profiles', array('userid' => $user['userid']))->row_array();
+        $likes = $this->db->get_where('profiles', array('userid' => $user))->row_array();
         $exp = explode(',', $likes['likes']);
         return in_array($userid, $exp);
     }

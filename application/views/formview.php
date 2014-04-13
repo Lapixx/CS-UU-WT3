@@ -31,9 +31,17 @@
 
 	echo form_fieldset('Brands you like'); 
 
+	echo '<div class="brands_col">';
+	$n = 0; $l = ceil(count($brands)/3);
 	foreach ($brands as $id => $brand) {
-		echo form_checkbox(array('name' => 'brands[]', 'value' => $id, 'checked' => set_checkbox('brands[]', $id))) . $brand;
+		echo form_checkbox(array('name' => 'brands[]', 'value' => $id, 'checked' => set_checkbox('brands[]', $id)));
+		echo form_label($brand, 'brands[]'); 
+		echo '<br/>';
+		if(++$n % $l == 0) {
+			echo '</div><div class="brands_col">';
+		}
 	}
-
+	echo '</div>';
+	
 	echo form_fieldset_close(); 
 	echo form_error('brands') . '<br />';

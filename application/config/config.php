@@ -14,7 +14,7 @@
 | path to your installation.
 |
 */
-$config['base_url']	= 'https://www.students.science.uu.nl/~3855473/WT3/';
+$config['base_url']	= 'http://www.divbyzero.nl/WT';
 
 /*
 |--------------------------------------------------------------------------
@@ -268,7 +268,7 @@ $config['sess_time_to_update']	= 300;
 $config['cookie_prefix']	= "";
 $config['cookie_domain']	= "";
 $config['cookie_path']		= "/";
-$config['cookie_secure']	= true;
+$config['cookie_secure']	= false;
 
 /*
 |--------------------------------------------------------------------------

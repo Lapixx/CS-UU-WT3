@@ -8,6 +8,15 @@ class Register extends ProfileForm {
 	{
         ProfileForm::index();
 
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+		$this->form_validation->set_rules('password', 'Password', 'required');
+		$this->form_validation->set_rules('pass_conf', 'Password confirmation', 'required|matches[password]');
+		$this->form_validation->set_rules('first_name', 'First name', 'required|alpha');
+		$this->form_validation->set_rules('last_name', 'Last name', 'required|alpha');
+		$this->form_validation->set_rules('nickname', 'Nickname', 'required|is_unique[profiles.nickname]|alpha_dash');
+        $this->form_validation->set_rules('description', 'About you', 'required');
+		$this->form_validation->set_rules('questions', 'Questions', 'callback_questions_valid');
+
         $data = array('brands' => $this->brandmodel->getAllBrandNames(), 'questions' => $this->questions, 'title' => 'Register');
         if ($this->form_validation->run()) {
             $email = $this->input->post('email');
@@ -27,6 +36,10 @@ class Register extends ProfileForm {
         $this->load->view('partials/footer');
 	}
 
+	public function questions_valid($questions) {
+		$this->form_validation->set_message('questions_valid', 'Please answer all the questions.');
+		return count($questions) == count($this->questions);
+	}
     // (Question number, Option A, Option B, Option C, Affected parameter, Effect in %)
     public $questions = array(
             array('I prefer large groups of people, with a high degree of diversity.', 'I prefer intimate gatherings with only close friends.', 'I am really inbetween.', 'I', '-10'),

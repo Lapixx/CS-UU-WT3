@@ -4,22 +4,16 @@ class ProfileForm extends CI_Controller {
 
 	public function index()
 	{
-        $this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
-        $this->form_validation->set_rules('password', 'Password', 'required');
-        $this->form_validation->set_rules('pass_conf', 'Password confirmation', 'required|matches[password]');
-        $this->form_validation->set_rules('first_name', 'First name', 'required|alpha');
-        $this->form_validation->set_rules('last_name', 'Last name', 'required|alpha');
-        $this->form_validation->set_rules('nickname', 'Nickname', 'required|is_unique[profiles.nickname]|alpha_dash');
+        
         $this->form_validation->set_rules('gender', 'Gender', 'required');
         $this->form_validation->set_rules('min_age', 'Minimum preferred age', 'required|is_natural|less_than[100]|greater_than[17]');
         $this->form_validation->set_rules('max_age', 'Maximum preferred age', 'required|is_natural|less_than[100]|greater_than[17]|greater_than[' . $this->input->post('min_age') . ']');
         $this->form_validation->set_rules('dob', 'Date of birth', 'required|callback_date_valid');
-        $this->form_validation->set_rules('description', 'About you', 'required');
         $this->form_validation->set_rules('gender_pref', 'Gender preference', 'required');
         $this->form_validation->set_rules('brands', 'Brands', 'callback_brands_valid');
         $this->form_validation->set_rules('brands[]', 'Brands', 'callback_brands_valid');
-        $this->form_validation->set_rules('questions', 'Questions', 'callback_questions_valid');
-
+        
+		$this->form_validation->set_message('is_natural', 'Please enter integers');
         $this->form_validation->set_message('is_unique', 'Already in use.');
         $this->form_validation->set_message('required', 'This field is required.');
 	}
@@ -67,11 +61,6 @@ class ProfileForm extends CI_Controller {
         return !empty($brands);
     }
 
-    public function questions_valid($questions) {
-        $this->form_validation->set_message('questions_valid', 'Please answer all the questions.');
-        return count($questions) == count($this->questions);
-    }
-
     public function buildPersonality() {
         $pers = array('I' => 50, 'N' => 50, 'T' => 50, 'P' => 50);
 
@@ -94,7 +83,7 @@ class ProfileForm extends CI_Controller {
         return $pers;
     }
 
-    public function buildProfile() {
+    public function buildProfile($anon = false) {
         $profile = array();
 
         $profile['firstname'] = $this->input->post('first_name');
@@ -108,9 +97,11 @@ class ProfileForm extends CI_Controller {
         $profile['max_age'] = $this->input->post('max_age');
         $profile['brands'] = implode(',', $this->input->post('brands'));
 
-        $personality = $this->buildPersonality();
-        $profile['personality'] = implode(',', $personality);
-        $profile['personality_preference'] = implode(',', array(100 - $personality['I'], 100 - $personality['N'], 100 - $personality['T'], 100 - $personality['P']));
+		if (!$anon) {
+	        $personality = $this->buildPersonality();
+	        $profile['personality'] = implode(',', $personality);
+	        $profile['personality_preference'] = implode(',', array(100 - $personality['I'], 100 - $personality['N'], 100 - $personality['T'], 100 - $personality['P']));
+        }
 
         return $profile;
     }

@@ -193,6 +193,20 @@ div.center div.avatar{
 	margin: 0px auto;
 }
 
+fieldset {
+	padding: 10px;
+}
+
+input, range{
+	margin: 4px 2px;
+}
+
+div.brands_col{
+	margin: 0px;
+	display: inline-block;
+	width: 300px;
+	vertical-align: top;
+}
 
 
 

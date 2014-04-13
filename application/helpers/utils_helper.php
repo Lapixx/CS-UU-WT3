@@ -66,7 +66,7 @@ function format_mbti($scores, $returnAsString = false){
 	if(!is_array($scores)){
 		$scores = explode(',', $scores);
 		foreach ($scores as &$s) {
-			$s = $s;
+			$s = intval($s);
 		}
 	}
 	
@@ -76,10 +76,10 @@ function format_mbti($scores, $returnAsString = false){
 	foreach ($scores as $i => $score) {
 		if($score < 50) {
 			$score = 100 - $score;
-			$formatted[] = $mbti_types[$i][1] . ' (' . $score . '%)';
+			$formatted[] = $mbti_types[$i][1] . ' (' . round($score) . '%)';
 		}
 		else{
-			$formatted[] = $mbti_types[$i][0] . ' (' . $score . '%)';
+			$formatted[] = $mbti_types[$i][0] . ' (' . round($score) . '%)';
 		}
 	}
 	

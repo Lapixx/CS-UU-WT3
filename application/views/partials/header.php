@@ -15,7 +15,14 @@
 		<ul>
 			<li><b><a href="<?=base_url()?>home">DataDate</a></b></li>
 			
-			<?php if($this->session->userdata('userid')) { ?>
+			<?php if ($this->session->userdata('adminid')) { ?>
+			
+				<li class="right"><a href="<?=base_url()?>logout">Sign out</a></li>
+				<li class="right">&bull;</li>
+				<li class="right"><a href="<?=base_url()?>configuration">Configuration</a></li>
+				
+			
+			<?php } else if($this->session->userdata('userid')) { ?>
 			
 				<li><a href="<?=base_url()?>profiles/discover">Discover</a></li>
 				<li>&bull;</li>

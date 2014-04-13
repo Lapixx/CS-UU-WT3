@@ -39,8 +39,14 @@ class Usermodel extends CI_Model
 	}
 	
 	private function addLikeStatus($profile) {
-		$profile['like'] = $this->doesLike($profile['userid']);
-		$profile['liked'] = $this->doesLiked($profile['userid']);
+		if($this->session->userdata('userid')) {
+			$profile['like'] = $this->doesLike($profile['userid']);
+			$profile['liked'] = $this->doesLiked($profile['userid']);
+		}
+		else {
+			$profile['like'] = false;
+			$profile['liked'] = false;
+		}
 		return $profile;
 	}
 	
@@ -131,10 +137,11 @@ class Usermodel extends CI_Model
         $this->db->where('userid', $user['userid']);
         $this->db->update('users', array('password' => crypt($password, $this->generateSalt())));
 
+		$idtype = ($user['admin'] == 'TRUE' ? 'adminid' : 'userid');
+		
         $session_data = array(
-                            'userid' => $user['userid'],
-                            'email' => $user['email'],
-                            'admin' => $user['admin']
+                            $idtype => $user['userid'],
+                            'email' => $user['email']
                         );
 
         $this->session->set_userdata($session_data);

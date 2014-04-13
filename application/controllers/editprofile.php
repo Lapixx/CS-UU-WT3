@@ -15,15 +15,11 @@ class EditProfile extends ProfileForm {
             $profile = $this->buildProfile();
 
             if ($this->usermodel->tryUpdateProfile($this->session->userdata('email'), $profile)) {
-            	$this->load->view('partials/header');
-                $this->load->view('profiles/me');
-                $this->load->view('partials/footer');
+                build_view($this, 'profiles/me');
                 return;
             }
         }
 
-        $this->load->view('partials/header');
-        $this->load->view('editprofile', $data);
-        $this->load->view('partials/footer');
+        build_view($this, 'editprofile', $data);
 	}
 }

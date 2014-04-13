@@ -15,7 +15,7 @@ if($profile['like'] && $profile['liked']) {
 echo '<b>Gender:</b> '.ucfirst($profile['gender']).'<br/>';
 echo '<b>Date of Birth:</b> '.$profile['dob'].'<br/>';
 echo '<b>Personality:</b> '.format_mbti($profile['personality'], true).'<br/>';
-echo '<b>Brands:</b> '.implode(', ', $profile['brands']).'<br/>';
+echo '<b>Brands:</b> '.implode(', ', $profile['brand_names']).'<br/>';
 echo '<b>Description:</b> '.$profile['description'].'<br/></br>';
 
 echo '<b>Gender preference:</b> '.ucfirst($profile['gender_preference']).'<br/>';
@@ -27,12 +27,13 @@ if(!$this->session->userdata('userid')) {
 }
 else{
 
-	if (!$profile['like'] && $profile['userid'] !== $this->session->userdata('userid'))
+	if($profile['userid'] == $this->session->userdata('userid'))
+		echo '<a href="'.base_url().'editprofile" class="prominent">Edit my profile</a><br/>';
+	else if (!$profile['like'])
 		echo '<a href="'.base_url().'profiles/like/'.$profile['userid'].'" class="prominent">&#10084; Like</a><br/>';
 		
 	if ($profile['like'])
 		echo 'You like this user!<br/>';
-	
 	if ($profile['liked'])
 		echo 'This user likes you!';
 }

@@ -17,7 +17,11 @@ class Login extends CI_Controller {
             $password = $this->input->post('password');
 
             if ($this->usermodel->tryLogin($email, $password)) {
-                redirect("/home");
+            	
+            	if ($this->session->userdata('adminid'))
+            		redirect("/configuration");
+            	else
+            		redirect("/home");
                 return;
             }
 

@@ -24,16 +24,12 @@ class Register extends ProfileForm {
             $profile = $this->buildProfile();
 
             if ($this->usermodel->tryRegister($email, $password) && $this->usermodel->tryUpdateProfile($email, $profile)) {
-            	$this->load->view('partials/header');
-                $this->load->view('registersuccess');
-                $this->load->view('partials/footer');
+                build_view($this, 'registersuccess');
                 return;
             }
         }
 
-        $this->load->view('partials/header');
-        $this->load->view('register', $data);
-        $this->load->view('partials/footer');
+        build_view($this, 'register', $data);
 	}
 
 	public function questions_valid($questions) {

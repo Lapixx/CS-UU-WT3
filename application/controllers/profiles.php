@@ -27,7 +27,7 @@ class Profiles extends CI_Controller {
 		build_view($this, 'profile_details', array('profile' => $profile, 'title' => $profile['nickname']));
 	}
 	
-	public function my_likes($page = 0)
+	public function my_likes($page = 0, $json = false)
 	{
 		// not logged in
 		if(!$this->session->userdata('userid')) {	
@@ -39,7 +39,7 @@ class Profiles extends CI_Controller {
 		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People I like'));
 	}
 	
-	public function like_me($page = 0)
+	public function like_me($page = 0, $json = false)
 	{
 		// not logged in
 		if(!$this->session->userdata('userid')) {	
@@ -51,7 +51,7 @@ class Profiles extends CI_Controller {
 		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People who like me'));
 	}
 	
-	public function connections($page = 0)
+	public function connections($page = 0, $json = false)
 	{
 		// not logged in
 		if(!$this->session->userdata('userid')) {	
@@ -63,7 +63,7 @@ class Profiles extends CI_Controller {
 		build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'Connections'));
 	}
 	
-	public function discover($page = 0)
+	public function discover($page = 0, $json = false)
 	{
 		// not logged in
 		if(!$this->session->userdata('userid')) {	

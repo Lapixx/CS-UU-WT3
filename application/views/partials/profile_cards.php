@@ -1,10 +1,10 @@
 <?php
 if (!empty($profiles)) {
 	echo '<div class="center">';
-	foreach ($profiles as $profile) {
+	foreach ($profiles as $i => $profile) {
 ?>
 
-<div class="profileCard">
+<div class="profileCard" id="card_<?=$i?>">
 	<div class="center">
 		<a href="<?=base_url()?>profiles/details/<?=$profile['userid']?>">
 			<div class="avatar">

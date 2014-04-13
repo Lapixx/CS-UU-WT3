@@ -28,15 +28,36 @@ function dob_to_age($dob) {
 	return floor($age);
 }
 
-function avatar_url($id) {
+function avatar_url($id = '') {
 	return base_url() . 'profiles/avatar/' . $id;
+}
+
+function paged_results($list, $page = 0, $length = 6){
+	
+	// negative page
+	if($page < 0) return array();
+	
+	$start = $page * $length;
+	$end = $start + ($length - 1);
+	$n = count($list);
+	
+	// not enough results
+	if($start >= $n) return array();
+	if($end >= $n) $length = $n-$start;
+	
+	return array_slice($list, $start, $length);
 }
 
 function build_json($self, $data) {
 	foreach ($data as &$profile) {
 	
+		// add some helper data
+		$profile['age'] = dob_to_age($profile['dob']);
+		$profile['personality'] = format_mbti($profile['personality'], true);
+	
 		// hide some internal stuff
 		unset($profile['likes']);
+		unset($profile['dob']);
 		
 		// hide some data for non-liked profiles
 		if(!$profile['like'] || !$profile['liked']){

@@ -27,7 +27,7 @@ class Profiles extends CI_Controller {
 		build_view($this, 'profile_details', array('profile' => $profile, 'title' => $profile['nickname']));
 	}
 	
-	public function my_likes($page = 0, $json = false)
+	public function my_likes($page = -1)
 	{
 		// not logged in
 		if(!$this->session->userdata('userid')) {	
@@ -35,29 +35,33 @@ class Profiles extends CI_Controller {
 			exit;
 		}
 		
+		$page = intval($page);
 		$profiles = $this->usermodel->getLikeProfiles();
-		if($json == 'json')
-			build_json($this, $profiles);
+		if($page != -1){
+			build_json($this, paged_results($profiles, $page));
+		}
 		else
-			build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People I like'));
+			build_view($this, 'profile_list', array('profiles' => paged_results($profiles), 'title' => 'People I like', 'page' => 'profiles/my_likes', 'pages' => ceil(count($profiles)/6)));
 	}
 	
-	public function like_me($page = 0, $json = false)
+	public function like_me($page = -1)
 	{
 		// not logged in
 		if(!$this->session->userdata('userid')) {	
 			redirect("/login");
 			exit;
 		}
-	
+		
+		$page = intval($page);
 		$profiles = $this->usermodel->getLikedProfiles();
-		if($json == 'json')
-			build_json($this, $profiles);
+		if($page != -1){
+			build_json($this, paged_results($profiles, $page));
+		}
 		else
-			build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People who like me'));
+			build_view($this, 'profile_list', array('profiles' => paged_results($profiles), 'title' => 'People who like me', 'page' => 'profiles/like_me', 'pages' => ceil(count($profiles)/6)));
 	}
 	
-	public function connections($page = 0, $json = false)
+	public function connections($page = -1)
 	{
 		// not logged in
 		if(!$this->session->userdata('userid')) {	
@@ -65,14 +69,16 @@ class Profiles extends CI_Controller {
 			exit;
 		}
 		
+		$page = intval($page);
 		$profiles = $this->usermodel->getMutualLikesProfiles();	
-		if($json == 'json')
-			build_json($this, $profiles);
+		if($page != -1){
+			build_json($this, paged_results($profiles, $page));
+		}
 		else	
-			build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'Connections'));
+			build_view($this, 'profile_list', array('profiles' => paged_results($profiles), 'title' => 'Connections', 'page' => 'profiles/connections', 'pages' => ceil(count($profiles)/6)));
 	}
 	
-	public function discover($page = 0, $json = false)
+	public function discover($page = -1)
 	{
 		// not logged in
 		if(!$this->session->userdata('userid')) {	
@@ -80,11 +86,14 @@ class Profiles extends CI_Controller {
 			exit;
 		}
 		
+		$page = intval($page);
 		$profiles = $this->usermodel->getSortedMatchesForUser();		
-		if($json == 'json')
-			build_json($this, $profiles);
-		else
-			build_view($this, 'profile_list', array('profiles' => $profiles, 'title' => 'People you might like'));
+		if($page != -1){
+			build_json($this, paged_results($profiles, $page));
+		}
+		else{
+			build_view($this, 'profile_list', array('profiles' => paged_results($profiles), 'title' => 'People you might like', 'page' => 'profiles/discover', 'pages' => ceil(count($profiles)/6)));
+		}
 	}
 	
 	public function like($id)

@@ -41,6 +41,6 @@ class EditProfile extends ProfileForm {
             }
         }
 
-        build_view($this, 'editpicture', $data);
+        build_view($this, 'editprofile', $data);
 	}
 }

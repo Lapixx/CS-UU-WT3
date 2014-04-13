@@ -6,7 +6,7 @@
 
 <title>DataDate<?php if(isset($title) && $title !== '') { echo ' | '.$title; } ?></title>
 <link href="<?=css_url()?>defaults.css" rel="stylesheet" type="text/css" media="all">
-<script src="<?=js_url()?>jquery.js" type="text/javascript"></script>
+<script src="<?=js_url()?>jquery-2.1.0.min.js" type="text/javascript"></script>
 
 </head>
 

@@ -22,10 +22,10 @@ class EditProfile extends ProfileForm {
 
         $data = array('brands' => $this->brandmodel->getAllBrandNames(), 'title' => 'Edit profile', 'defaults' => $defaults);
         if ($this->form_validation->run()) {
-            $profile = $this->buildProfile();
+            $profile = $this->buildProfile(true);
 
             if ($this->usermodel->tryUpdateProfile($this->session->userdata('email'), $profile)) {
-            	build_view($this, 'profiles/me');
+            	redirect('profiles/me');
                 return;
             }
         }

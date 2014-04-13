@@ -85,10 +85,7 @@ class ProfileForm extends CI_Controller {
 
     public function buildProfile($anon = false) {
         $profile = array();
-
-        $profile['firstname'] = $this->input->post('first_name');
-        $profile['lastname'] = $this->input->post('last_name');
-        $profile['nickname'] = $this->input->post('nickname');
+        
         $profile['gender'] = $this->input->post('gender');
         $profile['dob'] = $this->input->post('dob');
         $profile['description'] = $this->input->post('description');
@@ -98,6 +95,10 @@ class ProfileForm extends CI_Controller {
         $profile['brands'] = implode(',', $this->input->post('brands'));
 
 		if (!$anon) {
+			$profile['firstname'] = $this->input->post('first_name');
+			$profile['lastname'] = $this->input->post('last_name');
+			$profile['nickname'] = $this->input->post('nickname');
+			
 	        $personality = $this->buildPersonality();
 	        $profile['personality'] = implode(',', $personality);
 	        $profile['personality_preference'] = implode(',', array(100 - $personality['I'], 100 - $personality['N'], 100 - $personality['T'], 100 - $personality['P']));

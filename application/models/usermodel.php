@@ -181,6 +181,16 @@ class Usermodel extends CI_Model
         return $this->db->affected_rows() > 0;
     }
 
+    public function deleteUser($password)
+    {
+        if (crypt($password, $user['password']) != $user['password']) {
+            return false;
+        }
+        $this->db->delete('users', array('userid' => $this->session->userdata('userid')));
+        $this->session->sess_destroy();
+        return true;
+    }
+
     public function like($user)
     {
         $userid = $this->session->userdata('userid');

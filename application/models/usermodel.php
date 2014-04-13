@@ -2,13 +2,12 @@
 
 class Usermodel extends CI_Model 
 {
-
 	private function resolveBrands($profiles) {
 	
 		// single profile
 		if(array_key_exists('userid', $profiles)) {
 			if(!empty($profiles)) {
-				$profiles['brands'] = $this->brandmodel->getBrandNames(explode(',', $profiles['brands']));
+				$profiles['brand_names'] = $this->brandmodel->getBrandNames(explode(',', $profiles['brands']));
 			}
 			return $profiles;
 		}
@@ -16,7 +15,7 @@ class Usermodel extends CI_Model
 		// list of profiles
 		foreach ($profiles as &$profile) {
 		    if(!empty($profile)) {
-		    	$profile['brands'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
+		    	$profile['brand_names'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
 		    }
 		}
 		return $profiles;

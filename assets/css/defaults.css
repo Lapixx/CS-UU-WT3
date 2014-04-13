@@ -154,6 +154,12 @@ nav ul li a:hover{
 	color: #FFFFFF;
 }
 
+div.cardWrap{
+	margin: 0px;
+	padding: 0px;
+	display: inline-block;
+}
+
 div.profileCard {
 	display: inline-block;
 	border: 2px solid #5500AA;

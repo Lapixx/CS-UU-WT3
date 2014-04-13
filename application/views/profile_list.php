@@ -1,26 +1,35 @@
 <h1><?=$title?></h1>
 
 <script type="text/javascript">
-var currentPage = 1;
+var currentPage = 0;
 var viewName = "<?=$page?>";
 var totalPages = <?=$pages?>;
 
 function next() {
 	if(currentPage >= totalPages - 1) return false;
 	_loadPage(++currentPage);
+	
+	if(currentPage >= totalPages - 1) $('#nav_next').hide();
+	$('#nav_back').show();
 }
 
 function back() {
 	if(currentPage <= 0) return false;
 	_loadPage(--currentPage);
+	
+	if(currentPage <= 0) $('#nav_back').hide();
+	$('#nav_next').show();
 }
 
 function _loadPage(n){
 	$.get("<?=base_url()?>" + viewName + "/" + n.toString())
 	.done(function(profiles){
 	
-		for(var i = 0; i < Math.min(profiles.length, 6); i++){
-			_replaceCard(i, profiles[i]);
+		for(var i = 0; i < 6; i++){
+			if(profiles[i])
+				_replaceCard(i, profiles[i]);
+			else
+				_clearCard(i);
 		}	
 	})
 	.fail(function(jqxhr, status, err){
@@ -28,9 +37,14 @@ function _loadPage(n){
 	});
 }
 
+function _clearCard(i){
+	$('#card_' + i).html('');
+}
+
 function _replaceCard(i, profile){
 
 	$('#card_' + i).html('\
+	<div class="profileCard">\
 		<div class="center">\
 			<a href="<?=base_url()?>profiles/details/'+profile.userid+'">\
 				<div class="avatar">\
@@ -47,7 +61,8 @@ function _replaceCard(i, profile){
 		\
 		<b>Personality:</b> '+profile.personality+'<br/>\
 		<b>Brands:</b> '+profile.brand_names.slice(0, 5).join(", ")+'<br/><br/>'+
-		profile.description);
+		profile.description +
+	'</div>');
 }
 </script>
 
@@ -56,5 +71,5 @@ function _replaceCard(i, profile){
 $this->load->view('partials/profile_cards', array('profiles' => $profiles));
 ?>
 
-<a href="#" onclick="back(); return false;" class="hidden">&lsaquo; Previous page</a>
-<a href="#" onclick="next(); return false;" class="right<?php if($pages <= 1) { echo ' hidden'; } ?>">Next page &rsaquo;</a>
+<a href="#" id="nav_back" onclick="back(); return false;" class="hidden">&lsaquo; Previous page</a>
+<a href="#" id="nav_next" onclick="next(); return false;" class="right<?php if($pages <= 1) { echo ' hidden'; } ?>">Next page &rsaquo;</a>

@@ -11,25 +11,24 @@ class EditProfile extends ProfileForm {
         $this->form_validation->set_rules('description', 'About you', 'required');
 
         $profile = $this->usermodel->getProfileByID($this->session->userdata('userid'));
-        $profile['brands'] = explode(',', $profile['brands']);
-        foreach ($profile as $key => $value) {
-            $_POST[$key] = $value;
-        }
+        $defaults = array();
+        $defaults['gender'] = $profile['gender'];
+        $defaults['dob'] = $profile['dob'];
+        $defaults['gender_pref'] = $profile['gender_preference'];
+        $defaults['min_age'] = $profile['min_age'];
+        $defaults['max_age'] = $profile['max_age'];
+        $defaults['brands'] = explode(',', $profile['brands']);
 
-        $data = array('brands' => $this->brandmodel->getAllBrandNames(), 'title' => 'Edit profile');
+        $data = array('brands' => $this->brandmodel->getAllBrandNames(), 'title' => 'Edit profile', 'defaults' => $defaults);
         if ($this->form_validation->run()) {
             $profile = $this->buildProfile();
 
             if ($this->usermodel->tryUpdateProfile($this->session->userdata('email'), $profile)) {
-            	$this->load->view('partials/header');
-                $this->load->view('profiles/me');
-                $this->load->view('partials/footer');
+            	buildview($this, 'profiles/me');
                 return;
             }
         }
 
-        $this->load->view('partials/header');
-        $this->load->view('editprofile', $data);
-        $this->load->view('partials/footer');
+        buildview($this, 'editprofile', $data);
 	}
 }

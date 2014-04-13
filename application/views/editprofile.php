@@ -5,7 +5,7 @@
 	echo form_textarea(array('name' => 'description', 'id' => 'description', 'value' => set_value('description'), 'cols' => '50', 'rows' => '10', 'maxlength' => '500'));
 	echo form_error('description') . '<br />';
 
-	$this->load->view('formview');
+	$this->load->view('formview', $defaults);
 
 	echo form_submit('update', 'Update');
 	echo form_close();

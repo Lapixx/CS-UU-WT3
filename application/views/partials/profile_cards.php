@@ -30,5 +30,11 @@ if (!empty($profiles)) {
 <?php
 	}
 	echo '</div>';
+} else{
+?>
+
+Nobody yet :(
+
+<?php
 }		
 ?>

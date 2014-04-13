@@ -10,6 +10,12 @@ class EditProfile extends ProfileForm {
 
         $this->form_validation->set_rules('description', 'About you', 'required');
 
+        $profile = $this->usermodel->getProfileByID($this->session->userdata('userid'));
+        $profile['brands'] = explode(',', $profile['brands']);
+        foreach ($profile as $key => $value) {
+            $_POST[$key] = $value;
+        }
+
         $data = array('brands' => $this->brandmodel->getAllBrandNames(), 'title' => 'Edit profile');
         if ($this->form_validation->run()) {
             $profile = $this->buildProfile();

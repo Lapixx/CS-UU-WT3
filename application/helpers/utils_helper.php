@@ -70,7 +70,7 @@ function format_mbti($scores, $returnAsString = false){
 	}
 	
 	$formatted = array();
-	$mbti_types = array('EI','NS','TF','JP');
+	$mbti_types = array('IE','NS','TF','PJ');
 	
 	foreach ($scores as $i => $score) {
 		if($score < 50) {

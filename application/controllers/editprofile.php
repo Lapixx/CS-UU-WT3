@@ -2,7 +2,7 @@
 
 require 'profileform.php';
 
-class Register extends ProfileForm {
+class EditProfile extends ProfileForm {
 
 	public function index()
 	{

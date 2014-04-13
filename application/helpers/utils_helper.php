@@ -48,7 +48,7 @@ function build_json($self, $data) {
 	$self->load->view('json', array('data' => $data));
 }
 
-function build_view($self, $name, $data) {
+function build_view($self, $name, $data = array()) {
 
 		// load current profile when available
 		$currentProfile = false;

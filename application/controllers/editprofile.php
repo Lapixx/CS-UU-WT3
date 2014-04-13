@@ -18,6 +18,7 @@ class EditProfile extends ProfileForm {
         $defaults['min_age'] = $profile['min_age'];
         $defaults['max_age'] = $profile['max_age'];
         $defaults['brands'] = explode(',', $profile['brands']);
+        $defaults['description'] = $profile['description'];
 
         $data = array('brands' => $this->brandmodel->getAllBrandNames(), 'title' => 'Edit profile', 'defaults' => $defaults);
         if ($this->form_validation->run()) {

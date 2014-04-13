@@ -48,6 +48,7 @@ function build_view($self, $name, $data) {
 			'currentProfile' => $currentProfile,
 			'title' => $title
 		));
+		
 			
 		// load requested view
 		$self->load->view($name, $data);

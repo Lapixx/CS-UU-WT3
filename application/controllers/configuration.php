@@ -10,12 +10,11 @@ class Configuration extends CI_Controller {
 
         $data = $this->configmodel->getSettings();
         if ($this->form_validation->run()) {
-        	$this->configmodel->setSettings(array('x' => $this->input->post('x'),
+        	$this->configmodel->setSettings(array('mix_weight' => $this->input->post('x'),
         										  'match_type' => $this->input->post('distance_measure'),
         										  'alpha' => $this->input->post('alpha')));
         	$data = $this->configmodel->getSettings();
         }
-
         build_view($this, 'configuration', $data);
 	}
 

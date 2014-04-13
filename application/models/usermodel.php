@@ -181,6 +181,11 @@ class Usermodel extends CI_Model
         return $this->db->affected_rows() > 0;
     }
 
+    public function deleteUser()
+    {
+        $this->db->delete('users', array('userid' => $this->session->userdata('userid')));
+    }
+
     public function like($user)
     {
         $userid = $this->session->userdata('userid');

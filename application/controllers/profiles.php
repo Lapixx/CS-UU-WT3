@@ -117,7 +117,7 @@ class Profiles extends CI_Controller {
 		redirect("/profiles/details/" . $id);
 	}
 	
-	public function avatar($id)
+	public function avatar($id, $s = '')
 	{
 		$profile = $this->usermodel->getProfileByID($id);
 
@@ -126,7 +126,7 @@ class Profiles extends CI_Controller {
 			show_404('avatar/'.$id);
 		}
 		
-		$profile_avatar = 'application/avatars/'.$profile['userid'].'.jpg';
+		$profile_avatar = 'application/avatars/'.($s === 's' ? 's' : '').$profile['userid'].'.jpg';
 
 		// not logged in/no avatar set - return default avatar (m/f)
 		if(!$this->session->userdata('userid') || !file_exists($profile_avatar)) {

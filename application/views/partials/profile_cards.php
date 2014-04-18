@@ -9,7 +9,7 @@ if (!empty($profiles)) {
 		<div class="center">
 			<a href="<?=base_url()?>profiles/details/<?=$profile['userid']?>">
 				<div class="avatar">
-					<img src="<?=avatar_url($profile['userid'])?>" />
+					<img src="<?=avatar_url($profile['userid'])?>/s" />
 					<?php if($profile['like']){ ?><span>&#10084;</span><?php } ?>
 					<?php if($profile['liked']){ ?><span class="like_me">&#10084;</span><?php } ?>
 				</div>

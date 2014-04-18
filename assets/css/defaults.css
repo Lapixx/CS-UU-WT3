@@ -60,7 +60,7 @@ h1, h2, h3, b, nav, a.prominent {
 
 p{
 	text-align: justify;
-	margin-bottom: 10px;	
+	margin-bottom: 10px;
 }
 
 a{
@@ -96,7 +96,8 @@ a.prominent:hover{
 footer{
 	margin-top: 60px;
 	margin-bottom: 10px;
-	border-top: 1px solid #FFFFFF;	
+	padding-left: 10px;
+	border-top: 1px solid #FFFFFF;
 	box-shadow: 0px -1px 0px #E0E0E0;
 }
 
@@ -208,7 +209,7 @@ fieldset {
 	padding: 10px;
 }
 
-input{
+input, textarea{
 	margin: 2px 6px;
 }
 
@@ -219,8 +220,15 @@ div.brands_col{
 	vertical-align: top;
 }
 
+td {
+	vertical-align: top;
+}
 
+div.error {
+	color: red;
+	display: inline-block;
+}
 
-
-
-
+fieldset {
+	margin-bottom: 10px;
+}

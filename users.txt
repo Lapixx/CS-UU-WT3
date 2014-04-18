@@ -1,3 +1,14 @@
-email                                       password
+EMAIL                                       PASSWORD
+
 admin@admin.com                             admin
-matt.damon@bourne.com                       jasonbourne
+matt.damon@filmactorsguild.com              jasonbourne
+alec.baldwin@filmactorsguild.com            theoneandonlybaldwin
+kim@nk.com                                  americasucks
+hans.blix@un.org                            unitednationsrox
+samuel@filmactorsguild.com                  footmassage
+seanp@filmactorsguild.com                   ihavetwooscars
+mm@filmactorsguild.com                      iliketobowl
+hhunt@filmactorsguild.com                   elizabeth
+susan_s@filmactorsguild.com                 rockyhorror
+clooney@filmactorsguild.com                 i'mthathandsomeman
+timmeh@filmactorsguild.com                  shawshank

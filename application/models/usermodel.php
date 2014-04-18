@@ -1,9 +1,9 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
-class Usermodel extends CI_Model 
+class Usermodel extends CI_Model
 {
 	private function resolveBrands($profiles) {
-	
+
 		// single profile
 		if(array_key_exists('userid', $profiles)) {
 			if(!empty($profiles)) {
@@ -11,7 +11,7 @@ class Usermodel extends CI_Model
 			}
 			return $profiles;
 		}
-	
+
 		// list of profiles
 		foreach ($profiles as &$profile) {
 		    if(!empty($profile)) {
@@ -20,13 +20,13 @@ class Usermodel extends CI_Model
 		}
 		return $profiles;
 	}
-	
+
 	private function ignoreMe($profiles) {
 		if(!$this->session->userdata('userid')) return $profiles;
-		
+
 		global $myid;
 		$myid = $this->session->userdata('userid');
-		
+
 		if (!function_exists('filterIgnoreMe')) {
 			function filterIgnoreMe($profile){
 				global $myid;
@@ -36,7 +36,7 @@ class Usermodel extends CI_Model
 		$profiles = array_filter($profiles, 'filterIgnoreMe');
 		return $profiles;
 	}
-	
+
 	private function addLikeStatus($profile) {
 		if($this->session->userdata('userid')) {
 			$profile['like'] = $this->doesLike($profile['userid']);
@@ -48,28 +48,28 @@ class Usermodel extends CI_Model
 		}
 		return $profile;
 	}
-	
+
 	private function compileProfile($profile) {
 		$profile = $this->resolveBrands($profile);
 		$profile = $this->addLikeStatus($profile);
 		return $profile;
 	}
-	
+
 	private function compileProfiles($profiles, $include_me = false) {
 		$profiles = $this->resolveBrands($profiles);
-		
+
 		foreach ($profiles as &$profile) {
 		    if(!empty($profile)) {
 				$profile = $this->addLikeStatus($profile);
 			}
 		}
-		
+
 		if(!$include_me)
 			$profiles = $this->ignoreMe($profiles);
-			
+
 		return $profiles;
 	}
-	
+
     public function getUserByID($id)
     {
         $query = $this->db->get_where('users', array('userid' => $id));
@@ -82,36 +82,41 @@ class Usermodel extends CI_Model
         return $query->row_array();
     }
 
+    public function isUniqueNickname($nickname) {
+        $profile = $this->db->get_where('profiles', array('nickname' => $nickname))->row_array();
+        return empty($profile);
+    }
+
     public function getProfileByID($id, $nocompile = false)
     {
         $query = $this->db->get_where('profiles', array('userid' => $id));
         $profile = $query->row_array();
-        
+
         if($nocompile) return $profile;
-        
+
         return $this->compileProfile($profile);
     }
-    
+
     public function getRandomProfiles($n)
     {
         $query = $this->db->get('profiles');
         $results = $this->ignoreMe($query->result_array());
-        
+
         $n = min($n, count($results));
         $random_keys = array_rand($results, $n);
-        
+
 		if ($n === 1) return array($this->compileProfile($results[$random_keys]));
-		
+
         $random_results = array();
-        foreach ($random_keys as $i) {        	
+        foreach ($random_keys as $i) {
         	array_push($random_results, $results[$i]);
         }
-        
+
         $random_results = $this->compileProfiles($random_results);
         foreach ($random_results as &$profile) {
-        	shuffle($profile['brand_names']);  
+        	shuffle($profile['brand_names']);
         }
-        
+
         shuffle($random_results);
         return $random_results;
     }
@@ -139,7 +144,7 @@ class Usermodel extends CI_Model
         $this->db->update('users', array('password' => crypt($password, $this->generateSalt())));
 
 		$idtype = ($user['admin'] == 'TRUE' ? 'adminid' : 'userid');
-		
+
         $session_data = array(
                             $idtype => $user['userid'],
                             'email' => $user['email']
@@ -235,7 +240,7 @@ class Usermodel extends CI_Model
     {
         $userid = $this->session->userdata('userid');
         if(!$userid) return false;
-        
+
         $this->db->select('likes');
         $likes = $this->db->get_where('profiles', array('userid' => $userid))->row_array();
         $exp = explode(',', $likes['likes']);
@@ -246,7 +251,7 @@ class Usermodel extends CI_Model
     {
         $userid = $this->session->userdata('userid');
         if(!$userid) return false;
-                
+
         $this->db->select('likes');
         $likes = $this->db->get_where('profiles', array('userid' => $user))->row_array();
         $exp = explode(',', $likes['likes']);
@@ -262,10 +267,10 @@ class Usermodel extends CI_Model
 
         $this->db->where_in('userid', $exp);
         $profiles = $this->db->get('profiles')->result_array();
-        
+
         $profiles = $this->compileProfiles($profiles);
-                
-        return $profiles;        
+
+        return $profiles;
     }
 
     public function getLikedProfiles()
@@ -273,43 +278,43 @@ class Usermodel extends CI_Model
     	global $userid;
         $userid = $this->session->userdata('userid');
         $profiles = $this->db->get('profiles')->result_array();
-        
+
         if (!function_exists('filterLikedProfiles')) {
 	        function filterLikedProfiles($profile){
 	        	global $userid;
 	        	return in_array($userid, explode(',', $profile['likes']));
 	        }
         }
-        
+
         $profiles = array_filter($profiles, 'filterLikedProfiles');
-        
+
         $profiles = $this->compileProfiles($profiles);
-        
-        return $profiles;   
+
+        return $profiles;
     }
-    
+
     public function getMutualLikesProfiles()
     {
     	global $liked_ids;
-    	
+
     	// people who like me
     	$liked = $this->getLikedProfiles();
-    	
+
     	// ids of those people
     	$liked_ids = array_map(function($x){
     		return $x['userid'];
     	}, $liked);
-    	
+
     	if (!function_exists('filterConnections')) {
 	    	function filterConnections($y){
 	    		global $liked_ids;
 	    		return in_array($y['userid'], $liked_ids);
 	    	}
     	}
-    	
+
     	// people I like, filtering out those who do not like me back
     	$profiles = array_filter($this->getLikeProfiles(), 'filterConnections');
-    	
+
     	return $profiles;
     }
 
@@ -365,9 +370,9 @@ class Usermodel extends CI_Model
         $profiles = array_map(function($match){
         	return $match['profile'];
         }, $matches);
-        
+
         $profiles = $this->compileProfiles($profiles);
-        
+
         return $profiles;
     }
 

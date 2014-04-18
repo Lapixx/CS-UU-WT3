@@ -1,10 +1,23 @@
-<?php if ($failed) { echo '<p>Invalid email or password.</p>'; } ?>
-<?php echo validation_errors(); ?>
-<?php echo form_open('login'); ?>
+<?php
+    if ($failed) {
+        echo '<p>Invalid email or password.</p>';
+    }
 
-Email: <input type="text" name="email" value="" size="30" /><br />
-Password: <input type="password" name="password" value="" size="30" />
+    echo form_open('login');
 
-<div><input type="submit" value="Log in" /> or <a href="<?=base_url()?>register">Register</a></div>
+    $table = $this->table->make_columns(array(
+            form_label('Email:', 'email'),
+            form_input(array('name' => 'email', 'id' => 'email', 'value' => set_value('email'))),
+            form_error('email'),
 
-<?php echo form_close(); ?>
+            form_label('Password:', 'password'),
+            form_password(array('name' => 'password', 'id' => 'password', 'value' => set_value('password'))),
+            form_error('password')
+        ),
+    3);
+
+    echo $this->table->generate($table);
+
+    echo form_submit('login', 'Log in');
+    echo ' or ' . anchor('register', 'Register');
+    echo form_close();

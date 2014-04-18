@@ -52,8 +52,8 @@
 	echo '<div class="brands_col">';
 	$n = 0; $l = ceil(count($brands)/3);
 	foreach ($brands as $id => $brand) {
-		echo form_checkbox(array('name' => 'brands[]', 'value' => $id, 'checked' => set_checkbox('brands[]', $id, in_array($id, $defaults['brands']))));
-		echo form_label($brand, 'brands[]');
+		echo form_checkbox(array('name' => 'brands[]', 'id' => $id, 'value' => $id, 'checked' => set_checkbox('brands[]', $id, in_array($id, $defaults['brands']))));
+		echo form_label($brand, $id);
 		echo '<br/>';
 		if(++$n % $l == 0) {
 			echo '</div><div class="brands_col">';

@@ -1,5 +1,5 @@
 /* Reset margins and paddings */
-*{
+* {
 	margin: 0px;
 	padding: 0px;
 }
@@ -37,7 +37,7 @@
     font-style: normal;
 }
 
-body{
+body {
 	background-color: #FAFAFA;
 	font-family: 'Neuton', serif;
 	-webkit-font-smoothing: antialiased;
@@ -54,33 +54,33 @@ h1, h2, h3, b, nav, a.prominent {
 	margin: 80px auto 0px;
 }
 
-#wrap > main, #wrap > article{
+#wrap > main, #wrap > article {
 	padding: 0px 25px 100px;
 }
 
-p{
+p {
 	text-align: justify;
 	margin-bottom: 10px;
 }
 
-a{
+a {
 	color: #0044CC;
 	text-decoration: underline;
 }
 
-a:hover{
+a:hover {
 	text-decoration: none;
 }
 
-a.right{
+a.right {
 	float: right;
 }
 
-.hidden{
+.hidden {
 	display: none;
 }
 
-a.prominent{
+a.prominent {
 	font-size: 20px;
 	background-color: #5500AA;
 	color: #EEDDFF;
@@ -89,11 +89,11 @@ a.prominent{
 	border-radius: 4px;
 	text-decoration: none;
 }
-a.prominent:hover{
+a.prominent:hover {
 	color: #FFFFFF;
 }
 
-footer{
+footer {
 	margin-top: 60px;
 	margin-bottom: 10px;
 	padding-left: 10px;
@@ -102,7 +102,7 @@ footer{
 	box-shadow: 0px -1px 0px #E0E0E0;
 }
 
-nav.sitenav{
+nav.sitenav {
 	position: fixed;
 	top: 0px;
 	width: 100%;
@@ -116,19 +116,19 @@ nav.sitenav{
 	z-index: 100;
 }
 
-nav ul{
+nav ul {
 	list-style: none;
 	margin: 12px 20px;
 	vertical-align: middle;
 }
 
-nav ul li{
+nav ul li {
 	display: inline;
 	margin: 0px 5px;
 	color: rgba(255, 255, 255, 0.5);
 }
 
-nav ul li b a{
+nav ul li b a {
 	font-size: 30px;
 	background-color: #EEDDFF;
 	color: #5500AA;
@@ -136,7 +136,7 @@ nav ul li b a{
 	margin-right: 10px;
 	border-radius: 4px;
 }
-nav ul li b a:hover{
+nav ul li b a:hover {
 	color: #5500AA;
 	background-color: #FFFFFF;
 }
@@ -147,16 +147,16 @@ nav ul li.right {
 	top: 10px;
 }
 
-nav ul li a{
+nav ul li a {
 	color: #EEDDFF;
 	text-decoration: none;
 }
 
-nav ul li a:hover{
+nav ul li a:hover {
 	color: #FFFFFF;
 }
 
-div.cardWrap{
+div.cardWrap {
 	margin: 0px;
 	padding: 0px;
 	display: inline-block;
@@ -173,7 +173,7 @@ div.profileCard {
 	vertical-align: top;
 }
 
-div.avatar, div.avatar img{
+div.avatar, div.avatar img {
 	position: relative;
 	padding: 0px;
 	margin: 0px;
@@ -190,19 +190,19 @@ div.avatar span {
 	text-shadow: 0px 1px 1px #000000;
 }
 
-div.avatar span.like_me{
+div.avatar span.like_me {
 	right: 10px;
 	bottom: -2px;
 	color: #FF0088;
 }
 
-div.center{
+div.center {
 	margin: 0px auto;
 	padding: 0px;
 	text-align: center;
 }
 
-div.center div.avatar{
+div.center div.avatar {
 	margin: 0px auto;
 }
 
@@ -210,18 +210,29 @@ fieldset {
 	padding: 10px;
 }
 
-input, textarea{
+input, textarea {
 	margin: 2px 6px;
 }
 
-div.brands_col{
+input[type=text], input[type=password] {
+	width: 200px;
+}
+
+div.brands_col {
 	margin: 0px;
 	display: inline-block;
 	width: 300px;
 	vertical-align: top;
 }
 
+table {
+	border: 0;
+	border-spacing: 0px;
+	border-collapse: separate;
+}
+
 td {
+	padding: 0px;
 	vertical-align: top;
 }
 
@@ -232,4 +243,12 @@ div.error {
 
 fieldset {
 	margin-bottom: 10px;
+}
+
+input#dob {
+	width: 80px;
+}
+
+input[id$=_age] {
+	width: 50px;
 }

@@ -12,12 +12,12 @@ class Register extends ProfileForm {
 
         ProfileForm::index();
 
-		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');
+		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|callback_unique_email');
 		$this->form_validation->set_rules('password', 'Password', 'required');
 		$this->form_validation->set_rules('pass_conf', 'Password confirmation', 'required|matches[password]');
-		$this->form_validation->set_rules('first_name', 'First name', 'required|alpha');
-		$this->form_validation->set_rules('last_name', 'Last name', 'required|alpha');
-		$this->form_validation->set_rules('nickname', 'Nickname', 'required|is_unique[profiles.nickname]|alpha_dash');
+		$this->form_validation->set_rules('first_name', 'First name', 'required|callback_valid_name');
+		$this->form_validation->set_rules('last_name', 'Last name', 'required|callback_valid_name');
+		$this->form_validation->set_rules('nickname', 'Nickname', 'required|callback_unique_nickname|alpha_dash');
         $this->form_validation->set_rules('description', 'About you', 'required');
 		$this->form_validation->set_rules('questions', 'Questions', 'callback_questions_valid');
 
@@ -41,6 +41,23 @@ class Register extends ProfileForm {
 		$this->form_validation->set_message('questions_valid', 'Please answer all the questions.');
 		return count($questions) == count($this->questions);
 	}
+
+    public function unique_email($email) {
+        $this->form_validation->set_message('unique_email', 'Already in use.');
+        $user = $this->usermodel->getUserByEmail($email);
+        return empty($user);
+    }
+
+    public function unique_nickname($nickname) {
+        $this->form_validation->set_message('unique_nickname', 'Already in use.');
+        return $this->usermodel->isUniqueNickname($nickname);
+    }
+
+    public function valid_name($name) {
+        $this->form_validation->set_message('valid_name', 'Name may only contain alphabetical characters and hyphens.');
+        return preg_match('/^[\w-]+$/', $name) === 1;
+    }
+
     // (Question number, Option A, Option B, Option C, Affected parameter, Effect in %)
     public $questions = array(
             array('I prefer large groups of people, with a high degree of diversity.', 'I prefer intimate gatherings with only close friends.', 'I am really inbetween.', 'I', '-10'),

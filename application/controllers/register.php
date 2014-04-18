@@ -24,6 +24,7 @@ class Register extends ProfileForm {
             $profile = $this->buildProfile();
 
             if ($this->usermodel->tryRegister($email, $password) && $this->usermodel->tryUpdateProfile($email, $profile)) {
+                $this->usermodel->tryLogin($email, $password);
                 build_view($this, 'registersuccess');
                 return;
             }

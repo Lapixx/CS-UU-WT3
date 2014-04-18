@@ -1,1 +1,1 @@
-<p>You are now registered! Try logging in <?php echo anchor('login', 'here', ''); ?>.</p>
+<p>You are now registered!</p>

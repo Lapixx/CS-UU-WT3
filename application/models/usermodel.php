@@ -105,7 +105,11 @@ class Usermodel extends CI_Model
         $n = min($n, count($results));
         $random_keys = array_rand($results, $n);
 
-		if ($n === 1) return array($this->compileProfile($results[$random_keys]));
+		if ($n === 1) {
+			$profile = $this->compileProfile($results[$random_keys]));
+			shuffle($profile['brand_names']);
+			return array($profile);
+		}
 
         $random_results = array();
         foreach ($random_keys as $i) {

@@ -15,7 +15,7 @@
 |
 */
 
-$config['base_url']	= 'https://www.students.science.uu.nl/~3835634/Practicum 3/';
+$config['base_url']	= 'https://www.students.science.uu.nl/~3835634/Practicum%203/';
 
 /*
 |--------------------------------------------------------------------------

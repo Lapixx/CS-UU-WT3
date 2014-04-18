@@ -6,6 +6,10 @@ class Register extends ProfileForm {
 
 	public function index()
 	{
+        if($this->session->userdata('userid')) {
+            redirect("/home");
+        }
+
         ProfileForm::index();
 
 		$this->form_validation->set_rules('email', 'Email', 'required|valid_email|is_unique[users.email]');

@@ -4,6 +4,10 @@ class Configuration extends CI_Controller {
 
 	public function index()
 	{
+        if(!$this->session->userdata('adminid')) {
+            redirect("/home");
+        }
+
 		$this->form_validation->set_rules('distance_measure', 'Distance measure', 'required');
 		$this->form_validation->set_rules('x', 'X', 'required|callback_valid_factor');
 		$this->form_validation->set_rules('alpha', 'Alpha', 'required|callback_valid_factor');

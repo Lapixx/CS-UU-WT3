@@ -6,6 +6,10 @@ class EditProfile extends ProfileForm {
 
 	public function index()
 	{
+        if(!$this->session->userdata('userid')) {
+            redirect("/home");
+        }
+
         ProfileForm::index();
 
         $profile = $this->usermodel->getProfileByID($this->session->userdata('userid'));

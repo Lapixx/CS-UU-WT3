@@ -100,7 +100,7 @@ class Usermodel extends CI_Model
         $n = min($n, count($results));
         $random_keys = array_rand($results, $n);
         
-		if ($n === 1) return array($results[$random_keys]);
+		if ($n === 1) return array($this->compileProfile($results[$random_keys]));
 		
         $random_results = array();
         foreach ($random_keys as $i) {        	

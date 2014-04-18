@@ -18,13 +18,13 @@ echo '<b>Gender:</b> '.ucfirst($profile['gender']).'<br/>';
 echo '<b>Date of Birth:</b> '.$profile['dob'].'<br/>';
 echo '<b>Personality:</b> '.format_mbti($profile['personality'], true).'<br/>';
 echo '<b>Brands:</b> '.implode(', ', $profile['brand_names']).'<br/>';
-echo '<b>Description:</b> '.$profile['description'].'<br/></br>';
+echo '<b>Description:</b> '.$profile['description'].'<br/><br/>';
 
 echo '<b>Gender preference:</b> '.ucfirst($profile['gender_preference']).'<br/>';
 echo '<b>Personality preference:</b> '.format_mbti($profile['personality_preference'], true).'<br/>';
 echo '<b>Age preference:</b> '.$profile['min_age'].'-'.$profile['max_age'].'<br/><br/>';
-	
-if(!$this->session->userdata('userid')) {	
+
+if(!$this->session->userdata('userid')) {
 	echo '<a href="'.base_url().'login" class="prominent">Get in touch with '.$profile['nickname'].' &rsaquo;</a>';
 }
 else{
@@ -33,7 +33,7 @@ else{
 		echo '<a href="'.base_url().'editprofile" class="prominent">Edit my profile</a> <a href="'.base_url().'editpicture" class="prominent">Change my picture</a><br/><br/><a href="'.base_url().'deleteuser">Delete my profile... FOREVER</a> ';
 	else if (!$profile['like'])
 		echo '<a href="'.base_url().'profiles/like/'.$profile['userid'].'" class="prominent">&#10084; Like</a><br/>';
-		
+
 	if ($profile['like'])
 		echo 'You like this user!<br/>';
 	if ($profile['liked'])

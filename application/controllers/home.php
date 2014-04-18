@@ -10,4 +10,10 @@ class Home extends CI_Controller {
 			'profiles' => $profiles
 		));
 	}
+	
+	public function random()
+	{
+		$profiles = $this->usermodel->getRandomProfiles(6);
+		build_json($this, $profiles);
+	}
 }

@@ -3,10 +3,12 @@
 <?php 
 if(!$this->session->userdata('userid'))
 	$this->load->view('partials/promo');
-?>
 
-<?php
+$pages = 1;
+$page = "home/random";
+include("partials/paging.js.php");
+
 $this->load->view('partials/profile_cards', array('profiles' => $profiles));
 ?>
 
-<a href="<?=base_url()?>" class="right">Show more &rsaquo;</a><br/>
+<a href="#" onclick="refreshPage(); return false;" class="right">Show more &rsaquo;</a>

@@ -3,17 +3,17 @@
 class EditPicture extends CI_Controller {
 
 	function index(){
-		
+
 		// not logged in
-		if(!$this->session->userdata('userid')) {	
+		if(!$this->session->userdata('userid')) {
 			redirect("/login");
 			exit;
 		}
-		
+
 		// load libs
 		$this->load->library('upload');
 		$this->load->library('image_lib');
-		
+
 		//upload image
 		$upload_config = array(
 			'upload_path' => 'application/avatars/',
@@ -28,7 +28,7 @@ class EditPicture extends CI_Controller {
 			build_view($this, 'uploadpicture', array('error' => $this->upload->display_errors()));
 			return;
 		}
-		
+
 		$img = $this->upload->data();
 		$portrait = intval($img["image_width"]) < intval($img["image_height"]);
 
@@ -56,14 +56,14 @@ class EditPicture extends CI_Controller {
 			"x_axis" => '0',
 			"y_axis" => '0'
 		);
-		 
+
 		$this->image_lib->clear();
-		$this->image_lib->initialize($crop_config); 
+		$this->image_lib->initialize($crop_config);
 		if (!$this->image_lib->crop()){
 	    	build_view($this, 'uploadpicture', array('error' => $this->image_lib->display_errors()));
 	    	return;
-	    }		
-		
+	    }
+
 		redirect("/profiles/me");
 
 	}

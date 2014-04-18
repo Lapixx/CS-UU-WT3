@@ -95,7 +95,7 @@ class Usermodel extends CI_Model
     public function getRandomProfiles($n)
     {
         $query = $this->db->get('profiles');
-        $results = $query->result_array();
+        $results = $this->ignoreMe($query->result_array());
         
         $n = min($n, count($results));
         $random_keys = array_rand($results, $n);

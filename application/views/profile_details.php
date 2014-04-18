@@ -1,7 +1,9 @@
 <?php
 
 echo '<div class="avatar">';
-echo '<img src="'.avatar_url($profile['userid']).'" />';
+echo '<a href="'.avatar_url($profile['userid']).'" target="_blank">';
+echo '<img src="'.avatar_url($profile['userid']).'/s" />';
+echo '</a>';
 if($profile['like']){ echo '<span>&#10084;</span>'; }
 if($profile['liked']){ echo '<span class="like_me">&#10084;</span>'; }
 echo '</div>';

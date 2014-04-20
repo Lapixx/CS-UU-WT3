@@ -2,8 +2,8 @@
 
 class Usermodel extends CI_Model
 {
-	private function resolveBrands($profiles) {
-
+	private function resolveBrands($profiles)
+    {
 		// single profile
 		if(array_key_exists('userid', $profiles)) {
 			if(!empty($profiles)) {
@@ -13,7 +13,7 @@ class Usermodel extends CI_Model
 		}
 
 		// list of profiles
-		foreach ($profiles as &$profile) {
+		foreach ($profiles as &$profile){
 		    if(!empty($profile)) {
 		    	$profile['brand_names'] = $this->brandmodel->getBrandNames(explode(',', $profile['brands']));
 		    }
@@ -21,7 +21,9 @@ class Usermodel extends CI_Model
 		return $profiles;
 	}
 
-	private function ignoreMe($profiles) {
+    // remove current user from profile listings
+	private function ignoreMe($profiles)
+    {
 		if(!$this->session->userdata('userid')) return $profiles;
 
 		global $myid;
@@ -37,7 +39,9 @@ class Usermodel extends CI_Model
 		return $profiles;
 	}
 
-	private function addLikeStatus($profile) {
+    // adds like/liked info to a profile
+	private function addLikeStatus($profile)
+    {
 		if($this->session->userdata('userid')) {
 			$profile['like'] = $this->doesLike($profile['userid']);
 			$profile['liked'] = $this->doesLiked($profile['userid']);
@@ -49,13 +53,17 @@ class Usermodel extends CI_Model
 		return $profile;
 	}
 
-	private function compileProfile($profile) {
+    // compile profile for display
+	private function compileProfile($profile)
+    {
 		$profile = $this->resolveBrands($profile);
 		$profile = $this->addLikeStatus($profile);
 		return $profile;
 	}
 
-	private function compileProfiles($profiles, $include_me = false) {
+    // compile list of profiles
+	private function compileProfiles($profiles, $include_me = false)
+    {
 		$profiles = $this->resolveBrands($profiles);
 
 		foreach ($profiles as &$profile) {
@@ -70,6 +78,12 @@ class Usermodel extends CI_Model
 		return $profiles;
 	}
 
+    public function isUniqueNickname($nickname)
+    {
+        $profile = $this->db->get_where('profiles', array('nickname' => $nickname))->row_array();
+        return empty($profile);
+    }
+
     public function getUserByID($id)
     {
         $query = $this->db->get_where('users', array('userid' => $id));
@@ -82,11 +96,6 @@ class Usermodel extends CI_Model
         return $query->row_array();
     }
 
-    public function isUniqueNickname($nickname) {
-        $profile = $this->db->get_where('profiles', array('nickname' => $nickname))->row_array();
-        return empty($profile);
-    }
-
     public function getProfileByID($id, $nocompile = false)
     {
         $query = $this->db->get_where('profiles', array('userid' => $id));
@@ -95,6 +104,13 @@ class Usermodel extends CI_Model
         if($nocompile) return $profile;
 
         return $this->compileProfile($profile);
+    }
+
+    public function getProfileByEmail($email)
+    {
+        $user = $this->getUserByEmail($email);
+        $userid = $user['userid'];
+        return $this->getProfileByID($userid);
     }
 
     public function getRandomProfiles($n)
@@ -123,13 +139,6 @@ class Usermodel extends CI_Model
 
         shuffle($random_results);
         return $random_results;
-    }
-
-    public function getProfileByEmail($email)
-    {
-        $user = $this->getUserByEmail($email);
-        $userid = $user['userid'];
-        return $this->getProfileByID($userid);
     }
 
     public function tryLogin($email, $password)
@@ -204,24 +213,6 @@ class Usermodel extends CI_Model
         return true;
     }
 
-    public function like($user)
-    {
-        $userid = $this->session->userdata('userid');
-        $this->db->select('likes');
-        $likes = $this->db->get_where('profiles', array('userid' => $userid))->row_array();
-        if (empty($likes['likes'])) {
-            $likes['likes'] = "$user";
-        }
-        else {
-            $likes['likes'] .= ",$user";
-        }
-        $this->db->where('userid', $userid);
-        $this->db->update('profiles', $likes);
-
-        $personality = $this->db->get_where('profiles', array('userid' => $user))->row_array();
-        $this->learnPreference($userid, $personality['personality']);
-    }
-
     private function learnPreference($userid, $personality)
     {
         $alpha = $this->db->get_where('settings', array('name' => 'alpha'))->row_array();
@@ -240,6 +231,26 @@ class Usermodel extends CI_Model
         $this->db->update('profiles', array('personality_preference' => $preference));
     }
 
+    // current user likes parameter user
+    public function like($user)
+    {
+        $userid = $this->session->userdata('userid');
+        $this->db->select('likes');
+        $likes = $this->db->get_where('profiles', array('userid' => $userid))->row_array();
+        if (empty($likes['likes'])) {
+            $likes['likes'] = "$user";
+        }
+        else {
+            $likes['likes'] .= ",$user";
+        }
+        $this->db->where('userid', $userid);
+        $this->db->update('profiles', $likes);
+
+        $personality = $this->db->get_where('profiles', array('userid' => $user))->row_array();
+        $this->learnPreference($userid, $personality['personality']);
+    }
+
+    // does the current user like the parameter user?
     public function doesLike($user)
     {
         $userid = $this->session->userdata('userid');
@@ -251,6 +262,7 @@ class Usermodel extends CI_Model
         return in_array($user, $exp);
     }
 
+    // does the parameter user like the current user?
     public function doesLiked($user)
     {
         $userid = $this->session->userdata('userid');
@@ -262,6 +274,7 @@ class Usermodel extends CI_Model
         return in_array($userid, $exp);
     }
 
+    // profiles of the users that the current user likes
     public function getLikeProfiles()
     {
         $userid = $this->session->userdata('userid');
@@ -277,6 +290,7 @@ class Usermodel extends CI_Model
         return $profiles;
     }
 
+    // profiles of the users that like the current user
     public function getLikedProfiles()
     {
     	global $userid;

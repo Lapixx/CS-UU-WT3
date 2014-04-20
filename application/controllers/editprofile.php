@@ -28,7 +28,7 @@ class EditProfile extends ProfileForm {
         $this->form_validation->set_rules('first_name', 'First name', 'required|alpha');
         $this->form_validation->set_rules('last_name', 'Last name', 'required|alpha');
         if ($this->input->post('nickname') != $profile['nickname']) {
-            $this->form_validation->set_rules('nickname', 'Nickname', 'required|is_unique[profiles.nickname]|alpha_dash');
+            $this->form_validation->set_rules('nickname', 'Nickname', 'required|callback_unique_nickname|alpha_dash');
         }
         else {
             $this->form_validation->set_rules('nickname', 'Nickname', 'required|alpha_dash');
@@ -47,4 +47,9 @@ class EditProfile extends ProfileForm {
 
         build_view($this, 'editprofile', $data);
 	}
+
+    public function unique_nickname($nickname) {
+        $this->form_validation->set_message('unique_nickname', 'Already in use.');
+        return $this->usermodel->isUniqueNickname($nickname);
+    }
 }

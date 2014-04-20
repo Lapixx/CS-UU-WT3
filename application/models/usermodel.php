@@ -348,7 +348,9 @@ class Usermodel extends CI_Model
 
     public function getSortedMatches($user)
     {
-        $this->db->where_not_in('userid', array($user['userid']));
+        if (array_key_exists('userid', $user)) {
+            $this->db->where_not_in('userid', array($user['userid']));
+        }
         $otherUsers = $this->db->get('profiles')->result_array();
 
         $preferredGender = $this->genderPreferenceToGender($user['gender_preference']);

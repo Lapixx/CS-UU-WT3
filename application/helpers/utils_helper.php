@@ -33,32 +33,32 @@ function avatar_url($id = '') {
 }
 
 function paged_results($list, $page = 0, $length = 6){
-	
+
 	// negative page
 	if($page < 0) return array();
-	
+
 	$start = $page * $length;
 	$end = $start + ($length - 1);
 	$n = count($list);
-	
+
 	// not enough results
 	if($start >= $n) return array();
 	if($end >= $n) $length = $n-$start;
-	
+
 	return array_slice($list, $start, $length);
 }
 
 function build_json($self, $data) {
 	foreach ($data as &$profile) {
-	
+
 		// add some helper data
 		$profile['age'] = dob_to_age($profile['dob']);
 		$profile['personality'] = format_mbti($profile['personality'], true);
-	
+
 		// hide some internal stuff
 		unset($profile['likes']);
 		unset($profile['dob']);
-		
+
 		// hide some data for non-liked profiles
 		if(!$profile['like'] || !$profile['liked']){
 			unset($profile['firstname']);
@@ -75,21 +75,21 @@ function build_view($self, $name, $data = array()) {
 		$currentProfile = false;
 		if($self->session->userdata('userid'))
 			$currentProfile = $self->usermodel->getProfileByID($self->session->userdata('userid'));
-	
+
 		$title = '';
 		if(isset($data) && array_key_exists('title', $data))
 			$title = $data['title'];
-	
+
 		// Build the page
 		$self->load->view('partials/header', array(
 			'currentProfile' => $currentProfile,
 			'title' => $title
 		));
-		
-			
+
+
 		// load requested view
 		$self->load->view($name, $data);
-		
+
 		$self->load->view('partials/footer');
 }
 
@@ -106,10 +106,10 @@ function format_mbti($scores, $returnAsString = false){
 			$s = intval($s);
 		}
 	}
-	
+
 	$formatted = array();
 	$mbti_types = array('IE','NS','TF','PJ');
-	
+
 	foreach ($scores as $i => $score) {
 		if($score < 50) {
 			$score = 100 - $score;
@@ -119,7 +119,7 @@ function format_mbti($scores, $returnAsString = false){
 			$formatted[] = $mbti_types[$i][0] . ' (' . round($score) . '%)';
 		}
 	}
-	
+
 	if ($returnAsString) {
 		return implode(', ', $formatted);
 	}

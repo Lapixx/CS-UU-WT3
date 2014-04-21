@@ -2,7 +2,7 @@ Authors: Tijn Kersjes (3855473) and Jordi Vermeulen (3835634)
 
 URL: https://students.science.uu.nl/~3835634/Practicum 3/
 
-Tested on Firefox (28.0), Safari (??.?), Internet Explorer (11.0).
+Tested on Firefox (28.0), Safari (7.0), Google Chrome (34.0), Internet Explorer (11.0).
 
 A list of user credentials can be found in users.txt.
 

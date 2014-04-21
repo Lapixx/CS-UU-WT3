@@ -246,8 +246,8 @@ $config['encryption_key'] = 'lGTzpZOyWWgIuW2VEcl1l1gdTIyXdSN2';
 |
 */
 $config['sess_cookie_name']		= 'ci_session';
-$config['sess_expiration']		= 3600;
-$config['sess_expire_on_close']	= false;
+$config['sess_expiration']		= 1800;
+$config['sess_expire_on_close']	= true;
 $config['sess_encrypt_cookie']	= true;
 $config['sess_use_database']	= true;
 $config['sess_table_name']		= 'ci_sessions';
@@ -297,7 +297,7 @@ $config['global_xss_filtering'] = true;
 $config['csrf_protection'] = true;
 $config['csrf_token_name'] = 'csrf_test_name';
 $config['csrf_cookie_name'] = 'csrf_cookie_name';
-$config['csrf_expire'] = 7200;
+$config['csrf_expire'] = 1800;
 
 /*
 |--------------------------------------------------------------------------

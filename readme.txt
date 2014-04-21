@@ -27,6 +27,11 @@ VIEWS
 - registersuccess: the view seen after successfully registering a new account
 - search: the view for searching through the user database
 - uploadpicture: the view for changing the user's profile picture
+- partials/footer: the view for the footer
+- partials/header: the view for the header
+- partials/paging.js: the view for the JavaScript code that handles the client-side page navigation
+- partials/profile_cards: the view for showing a collection of 6 profile summaries
+- partials/promo: the view for the promotional image shown to unregistered users
 
 CONTROLLERS
 - configuration: the controller for handling the matching algorithm's configuration

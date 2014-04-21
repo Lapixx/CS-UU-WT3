@@ -1,4 +1,3 @@
 RewriteEngine on
 RewriteCond $1 !^(index\.php|img|js|css|assets|robots\.txt)
 RewriteRule ^(.*)$ "/~3835634/Practicum 3/index.php/$1" [L]
-php_flag display_errors on

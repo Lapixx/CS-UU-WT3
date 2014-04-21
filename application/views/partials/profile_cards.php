@@ -17,14 +17,14 @@ if (!empty($profiles)) {
 			<br/>
 			<a href="<?=base_url()?>profiles/details/<?=$profile['userid']?>"><b><?=$profile['nickname']?></b></a> (<?=dob_to_age($profile['dob'])?>, <?=strtoupper($profile['gender'][0])?>)
 		</div>
-		
+
 		<br/>
-		
+
 		<b>Personality:</b> <?=format_mbti($profile['personality'], true)?><br/>
 		<b>Brands:</b> <?=implode(', ', array_slice($profile['brand_names'], 0, 5))?><br/>
-		
+
 		<br/>
-		
+
 		<?=$profile['description']?>
 	</div>
 </div>
@@ -38,5 +38,5 @@ if (!empty($profiles)) {
 Nobody yet :(
 
 <?php
-}		
+}
 ?>
